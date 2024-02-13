@@ -1,5 +1,5 @@
 exports.run = {
-    usage: ['spotifydl'],
+    hidden: ['spotifydl'],
     use: 'url ',
     category: 'downloader',
     async: async (m, { client, args, isPrefix, command, Func }) => {

@@ -65,37 +65,42 @@ exports.run = {
     premium: false
 };
 
-// Command handler for /spotifydl
-exports['/spotifydl'] = async (m, { client, text }) => {
+// Command handler for /getspotify
+exports['/getspotify'] = async (m, { client, text }) => {
     try {
-        const [resultNumber, link] = text.split(' '); // Extract result number and link from command
-        if (!resultNumber || !link) {
-            return client.reply(m.chat, 'Invalid command format. Usage: /spotifydl [result number] [link]', m);
+        const blockNumber = parseInt(text); // Extract block number from command
+        if (!blockNumber || blockNumber < 1) {
+            return client.reply(m.chat, 'Invalid command format. Usage: /getspotify [block number]', m);
         }
 
         // Check if search results and timestamp exist for the user
         if (userSearchResults[m.sender]) {
-            const { results, timestamp } = userSearchResults[m.sender];
-            const currentTimestamp = Date.now();
-            const elapsedTime = currentTimestamp - timestamp;
-            const resultIndex = parseInt(resultNumber) - 1;
+            const { results } = userSearchResults[m.sender];
 
-            // Check if the current time is within one minute of when the search results were sent
-            if (elapsedTime <= 60000) {
-                // Check if the result number is valid
-                if (resultIndex >= 0 && resultIndex < results.length) {
-                    // Execute the provided link for the specified result
-                    // Implement your logic to execute the link here
-                } else {
-                    return client.reply(m.chat, 'Invalid result number.', m);
-                }
+            // Check if the block number is valid
+            const resultIndex = blockNumber - 1;
+            if (resultIndex >= 0 && resultIndex < results.length) {
+                // Execute the corresponding /spotifydl command for the specified block's link
+                const link = results[resultIndex].link;
+                const command = `/spotifydl ${link}`;
+                client.emit('message', m.chat, { ...m, text: command });
             } else {
-                delete userSearchResults[m.sender];
-                return client.reply(m.chat, 'The session has expired. Please perform a new search.', m);
+                return client.reply(m.chat, 'Invalid block number.', m);
             }
         } else {
             return client.reply(m.chat, 'No recent search results found.', m);
         }
+    } catch (e) {
+        console.error(e); // Log the error for debugging
+        return client.reply(m.chat, global.status.error, m);
+    }
+};
+
+// Command handler for /spotifydl
+exports['/spotifydl'] = async (m, { client, text }) => {
+    try {
+        // Add your logic to execute the provided link here
+        return client.reply(m.chat, 'Executing Spotify download...', m);
     } catch (e) {
         console.error(e); // Log the error for debugging
         return client.reply(m.chat, global.status.error, m);
