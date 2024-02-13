@@ -65,37 +65,6 @@ exports.run = {
     premium: false
 };
 
-// Command handler for /getspotify
-exports['/getspotify'] = async (m, { client, text }) => {
-    try {
-        const blockNumber = parseInt(text); // Extract block number from command
-        if (!blockNumber || blockNumber < 1) {
-            return client.reply(m.chat, 'Invalid command format. Usage: /getspotify [block number]', m);
-        }
-
-        // Check if search results and timestamp exist for the user
-        if (userSearchResults[m.sender]) {
-            const { results } = userSearchResults[m.sender];
-
-            // Check if the block number is valid
-            const resultIndex = blockNumber - 1;
-            if (resultIndex >= 0 && resultIndex < results.length) {
-                // Execute the corresponding /spotifydl command for the specified block's link
-                const link = results[resultIndex].link;
-                const command = `/spotifydl ${link}`;
-                client.emit('message', m.chat, { ...m, text: command });
-            } else {
-                return client.reply(m.chat, 'Invalid block number.', m);
-            }
-        } else {
-            return client.reply(m.chat, 'No recent search results found.', m);
-        }
-    } catch (e) {
-        console.error(e); // Log the error for debugging
-        return client.reply(m.chat, global.status.error, m);
-    }
-};
-
 // Command handler for /spotifydl
 exports['/spotifydl'] = async (m, { client, text }) => {
     try {
@@ -106,3 +75,24 @@ exports['/spotifydl'] = async (m, { client, text }) => {
         return client.reply(m.chat, global.status.error, m);
     }
 };
+
+// Listen for user replies to execute /spotifydl command for the corresponding block's link
+client.on('messageCreate', async (message) => {
+    try {
+        const { body, args } = client.parse(message);
+        if (body.startsWith('/spotifydl') && args.length === 1 && ['1', '2', '3'].includes(args[0])) {
+            const blockNumber = parseInt(args[0]);
+            if (userSearchResults[message.sender]) {
+                const { results } = userSearchResults[message.sender];
+                const resultIndex = blockNumber - 1;
+                if (resultIndex >= 0 && resultIndex < results.length) {
+                    const link = results[resultIndex].link;
+                    const command = `/spotifydl ${link}`;
+                    client.emit('message', message.chat, { ...message, body: command });
+                }
+            }
+        }
+    } catch (e) {
+        console.error(e); // Log the error for debugging
+    }
+});
