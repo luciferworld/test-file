@@ -17,8 +17,8 @@ exports.run = {
             users.email = args[0]
             const transport = nodemailer.createTransport({
                 host: 'smtp.zoho.com',
-                port: 465,
-                secure: true,
+                port: 587 ,
+                secure: false,
                 auth: {
                     user: 'no-reply@verify.lucifercloud.me', // Your Zoho Mail email address
                     pass: 'Ibrahim@123' // Your Zoho Mail App Password
