@@ -31,15 +31,15 @@ exports.run = {
                 timestamp: Date.now()
             };
 
-            // Numbering Blocks and Creating Section for 1 Minute
+            // Numbering Results and Creating Section for 1 Minute
             const results = response.data.result;
             const chunkSize = 18;
             for (let i = 0; i < results.length; i += chunkSize) {
                 const chunk = results.slice(i, i + chunkSize);
                 let combinedCaption = i === 0 ? '乂  *S P O T I F Y  S E R A C H*\n\n' : ''; // Include caption only for the first chunk
                 chunk.forEach((v, index) => {
-                    const blockNumber = i / chunkSize + 1; // Calculate block number
-                    combinedCaption += `*Block ${blockNumber}*\n`;
+                    const resultNumber = i / chunkSize + index + 1; // Calculate result number
+                    combinedCaption += `*${resultNumber}.*\n`;
                     combinedCaption += `    ◦  *Title* : ${v.title}\n`;
                     combinedCaption += `    ◦  *Duration* : ${v.duration}\n`;
                     combinedCaption += `    ◦  *Artists* : ${v.artists}\n`;
@@ -68,9 +68,9 @@ exports.run = {
 // Command handler for /spotifydl
 exports['/spotifydl'] = async (m, { client, text }) => {
     try {
-        const [blockNumber, link] = text.split(' '); // Extract block number and link from command
-        if (!blockNumber || !link) {
-            return client.reply(m.chat, 'Invalid command format. Usage: /spotifydl [block number] [link]', m);
+        const [resultNumber, link] = text.split(' '); // Extract result number and link from command
+        if (!resultNumber || !link) {
+            return client.reply(m.chat, 'Invalid command format. Usage: /spotifydl [result number] [link]', m);
         }
 
         // Check if search results and timestamp exist for the user
@@ -78,16 +78,16 @@ exports['/spotifydl'] = async (m, { client, text }) => {
             const { results, timestamp } = userSearchResults[m.sender];
             const currentTimestamp = Date.now();
             const elapsedTime = currentTimestamp - timestamp;
-            const blockIndex = parseInt(blockNumber) - 1;
+            const resultIndex = parseInt(resultNumber) - 1;
 
             // Check if the current time is within one minute of when the search results were sent
             if (elapsedTime <= 60000) {
-                // Check if the block number is valid
-                if (blockIndex >= 0 && blockIndex < results.length) {
-                    // Execute the provided link for the specified block
+                // Check if the result number is valid
+                if (resultIndex >= 0 && resultIndex < results.length) {
+                    // Execute the provided link for the specified result
                     // Implement your logic to execute the link here
                 } else {
-                    return client.reply(m.chat, 'Invalid block number.', m);
+                    return client.reply(m.chat, 'Invalid result number.', m);
                 }
             } else {
                 delete userSearchResults[m.sender];
