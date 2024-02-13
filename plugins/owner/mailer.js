@@ -7,12 +7,12 @@ exports.run = {
    async: async (m, {
       client,
       text,
-      prefix,
+      isPrefix,
       command,
       Func
    }) => {
       try {
-         if (!text) return client.reply(m.chat, Func.example(prefix, command, 'no | subject | message'), m)
+         if (!text) return client.reply(m.chat, Func.example(isPrefix, command, 'no | subject | message'), m)
       let q = m.quoted ? m.quoted : m
       let mime = (q.msg || q).mimetype || ''
       client.sendReact(m.chat, '🕒', m.key)
