@@ -77,22 +77,24 @@ exports['/spotifydl'] = async (m, { client, text }) => {
 };
 
 // Listen for user replies to execute /spotifydl command for the corresponding block's link
-client.on('messageCreate', async (message) => {
-    try {
-        const { body, args } = client.parse(message);
-        if (body.startsWith('/spotifydl') && args.length === 1 && ['1', '2', '3'].includes(args[0])) {
-            const blockNumber = parseInt(args[0]);
-            if (userSearchResults[message.sender]) {
-                const { results } = userSearchResults[message.sender];
-                const resultIndex = blockNumber - 1;
-                if (resultIndex >= 0 && resultIndex < results.length) {
-                    const link = results[resultIndex].link;
-                    const command = `/spotifydl ${link}`;
-                    client.emit('message', message.chat, { ...message, body: command });
+exports.listen = (client) => {
+    client.on('messageCreate', async (message) => {
+        try {
+            const { body, args } = client.parse(message);
+            if (body.startsWith('/spotifydl') && args.length === 1 && ['1', '2', '3'].includes(args[0])) {
+                const blockNumber = parseInt(args[0]);
+                if (userSearchResults[message.sender]) {
+                    const { results } = userSearchResults[message.sender];
+                    const resultIndex = blockNumber - 1;
+                    if (resultIndex >= 0 && resultIndex < results.length) {
+                        const link = results[resultIndex].link;
+                        const command = `/spotifydl ${link}`;
+                        client.emit('message', message.chat, { ...message, body: command });
+                    }
                 }
             }
+        } catch (e) {
+            console.error(e); // Log the error for debugging
         }
-    } catch (e) {
-        console.error(e); // Log the error for debugging
-    }
-});
+    });
+};
