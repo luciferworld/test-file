@@ -1,5 +1,5 @@
 exports.run = {
-    usage: ['verify'],
+    usage: ['register'],
     async: async (m, {
         client,
         args,
