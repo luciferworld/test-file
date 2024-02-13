@@ -2,7 +2,7 @@ exports.run = {
    usage: ['removebg'],
    hidden: ['nobg'],
    use: 'reply photo',
-   category: 'utilities',
+   category: 'editer',
    async: async (m, {
       client,
       text,
@@ -45,7 +45,7 @@ exports.run = {
    },
    error: false,
    limit: true,
-   premium: true,
+   premium: false,
    cache: true,
    location: __filename
 }

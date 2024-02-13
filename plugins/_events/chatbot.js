@@ -1,0 +1,53 @@
+exports.run = {
+    async: async (m, { client, setting, Scraper, Func }) => {
+        try {
+            // Process when the message is a reply to an image or contains an image with a caption
+            if ((m.quoted && m.quoted.mtype === 'imageMessage') || (m.mtype === 'imageMessage' && m.text)) {
+                let q = m.quoted ? m.quoted : m;
+                let mime = (q.msg || q).mimetype || '';
+                if (mime.includes('image')) {
+                    let img = await client.downloadMediaMessage(q.msg || q);
+                    let image = await Scraper.uploadImageV2(img);
+
+                    // Extract text from caption if available
+                    let text = '';
+                    if (m.text) {
+                        text = encodeURIComponent(m.text);
+                    } else if (q.caption) {
+                        text = encodeURIComponent(q.caption);
+                    }
+
+                    // Send data to API using Func.fetchJson
+                    let apiURL = `https://api.betabotz.eu.org/api/search/bard-img?url=${image.data.url}&apikey=beta-Ibrahim1209`;
+                    if (text) {
+                        apiURL += `&text=${text}`;
+                    }
+                    const data = await Func.fetchJson(apiURL);
+
+                    // Reply with the data from the API
+                    m.reply(data.result);
+                } else {
+                    console.error('Error: Media message not found');
+                }
+            }
+
+            // Process text message
+            else   {
+                const msg = encodeURIComponent(m.text);
+                const json = await Api.neoxr('/gpt-pro', {
+                    q: msg
+                });
+
+                if (!m.fromMe && json.status && setting.chatbot) {
+                    return client.reply(m.chat, json.data.message, m);
+                }
+            }
+        } catch (e) {
+            console.error('Error:', e);
+        }
+    },
+    error: false,
+    private: true,
+    cache: true,
+    location: __filename
+};
