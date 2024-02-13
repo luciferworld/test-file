@@ -1,13 +1,8 @@
-const nodemailer = require('nodemailer')
+const nodemailer = require('nodemailer');
+
 exports.run = {
     usage: ['register'],
-    async: async (m, {
-        client,
-        args,
-        isPrefix,
-        command,
-        Func
-    }) => {
+    async: async (m, { client, args, isPrefix, command, Func }) => {
         try {
             if (global.db.users.find(v => v.jid == m.sender).verified) return client.reply(m.chat, Func.texted('bold', `✅ Your number already verified.`), m)
             if (!args || !args[0]) return client.reply(m.chat, Func.example(isPrefix, command, 'your gmail'), m)
@@ -21,16 +16,18 @@ exports.run = {
             users.code = code
             users.email = args[0]
             const transport = nodemailer.createTransport({
-                service: process.env.USER_EMAIL_PROVIDER,
+                host: 'smtp.zoho.com',
+                port: 465,
+                secure: true,
                 auth: {
-                    user: process.env.USER_EMAIL,
-                    pass: process.env.USER_APP_PASSWORD
+                    user: 'no-reply@verify.lucifercloud.me', // Your Zoho Mail email address
+                    pass: 'Ibrahim@123' // Your Zoho Mail App Password
                 }
             })
             const mailOptions = {
                 from: {
-                    name: process.env.USER_NAME,
-                    address: process.env.USER_EMAIL
+                    name: 'Lucifer API', // Your name or organization name
+                    address: 'no-reply@verify.lucifercloud.me' // Your Zoho Mail email address
                 },
                 to: args[0],
                 subject: 'Email Verification',
