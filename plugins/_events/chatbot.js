@@ -32,16 +32,7 @@ exports.run = {
             }
 
             // Process text message
-            else   {
-                const msg = encodeURIComponent(m.text);
-                const json = await Api.neoxr('/gpt-pro', {
-                    q: msg
-                });
-
-                if (!m.fromMe && json.status && setting.chatbot) {
-                    return client.reply(m.chat, json.data.message, m);
-                }
-            }
+           
         } catch (e) {
             console.error('Error:', e);
         }
