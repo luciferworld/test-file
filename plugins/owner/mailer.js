@@ -25,7 +25,7 @@ exports.run = {
       if (!users) return client.reply(m.chat, Func.texted('bold', `🚩 User not found.`), m)
       if (!users.verified) return client.reply(m.chat, Func.texted('bold', `🚩 This user has not verified.`), m)
       const transport = nodemailer.createTransport({
-         service: 'zoho mail',
+         service: 'gmail',
          auth: {
             user: process.env.USER_EMAIL,
             pass: process.env.USER_APP_PASSWORD
