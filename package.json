@@ -32,7 +32,9 @@
       "qrcode": "1.5.0",
       "speedtest-net": "1.6.2",
       "streamifier": "^0.1.1",
-      "translate-google-api": "1.0.4"
+      "translate-google-api": "1.0.4",
+      "hercai": "^12.0.0",
+     "rsnchat": "^3.0.7"
    },
    "devDependencies": {
       "@adiwajshing/baileys": "npm:@neoxr/baileys",
