@@ -13,13 +13,12 @@ exports.run = {
         Func
     }) => {
         try {
-            const prompt = "beautiful girl";
+            if (!text) return client.reply(m.chat, Func.example(isPrefix, command, 'a girl'), m)
+            client.sendReact(m.chat, '🕒', m.key)
             const negative_prompt = "blury, bad quality";
             const model = "absolutereality_v181.safetensors [3d9d4d2b]";
-
-            rsnchat.prodia(prompt, negative_prompt, model).then((response) => {
-                console.log(response);
-            });
+            const json = await rsnchat.prodia(text, negative_prompt, model)
+            client.sendFile(m.chat, json.imageUrl, 'image.jpg', `◦  *Prompt* : ${text}`, m)
         } catch (e) {
             return client.reply(m.chat, global.status.error, m)
         }
