@@ -18,7 +18,7 @@ exports.run = {
             const negative_prompt = "blury, bad quality";
             const model = "absolutereality_v181.safetensors [3d9d4d2b]";
             const json = await rsnchat.prodia(text, negative_prompt, model)
-            const buffer = Buffer.from(json.base64, 'base64')
+            const buffer = Buffer.from(json.base64)
             client.sendFile(m.chat, buffer, 'image.jpg', `◦  *Prompt* : ${text}`, m)
         } catch (e) {
             return client.reply(m.chat, global.status.error, m)
