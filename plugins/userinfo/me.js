@@ -28,7 +28,7 @@ exports.run = {
          caption += `	◦  *Banned* : ${(new Date - user.banTemp < env.timer) ? Func.toTime(new Date(user.banTemp + env.timeout) - new Date()) + ' (' + ((env.timeout / 1000) / 60) + ' min)' : user.banned ? '√' : '×'}\n`
          caption += `	◦  *Use In Private* : ${(global.db.chats.map(v => v.jid).includes(m.sender) ? '√' : '×')}\n`
          caption += `	◦  *Premium* : ${(user.premium ? '√' : '×')}\n`
-         caption += `	◦  *Verified* : ${(users.verified ? '√' : '×')}\n`
+         caption += `	◦  *Verified* : ${(user.verified ? '√' : '×')}\n`
          caption += `	◦  *Expired* : ${user.expired == 0 ? '-' : Func.timeReverse(user.expired - new Date() * 1)}\n\n`
          caption += global.footer
          client.sendMessageModify(m.chat, caption, m, {
