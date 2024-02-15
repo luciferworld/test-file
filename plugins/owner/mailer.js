@@ -13,12 +13,12 @@ exports.run = {
    Func
 }) => {
     try {
-        if (!text) return client.reply(m.chat, Func.example(prefix, command, 'no | subject | message'), m)
+        if (!text) return client.reply(m.chat, Func.example(isPrefix, command, 'no | subject | message'), m)
         let q = m.quoted ? m.quoted : m
         let mime = (q.msg || q).mimetype || ''
         client.sendReact(m.chat, '🕒', m.key)
         let [no, subject, msg] = text.split`|`
-        if (!no || !subject || !msg) return client.reply(m.chat, Func.example(prefix, command, 'no | subject | message'), m)
+        if (!no || !subject || !msg) return client.reply(m.chat, Func.example(isPrefix, command, 'no | subject | message'), m)
         let p = await client.onWhatsApp(no.trim())
         if (p.length == 0) return client.reply(m.chat, Func.texted('bold', `🚩 Invalid number.`), m)
         let jid = client.decodeJid(p[0].jid)
