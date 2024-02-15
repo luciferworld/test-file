@@ -1,5 +1,5 @@
 exports.run = {
-  usage: ['listban', 'listprem', 'listblock', 'listverifed'],
+  usage: ['listban', 'listprem', 'listblock', 'listverified'],
   category: 'miscs',
   async: async (m, {
     client,
@@ -39,7 +39,7 @@ exports.run = {
       }).join('\n')
       m.reply(text + '\n\n' + global.footer)
     } 
-    else if (command === 'listverifed') {
+    else if (command === 'listverified') {
       if (!isOwner) return m.reply(global.status.owner)
       const data = global.db.users.filter(v => v.verified)
       if (data.length < 1) return m.reply(Func.texted('bold', `🚩 Data empty.`))
