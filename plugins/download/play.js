@@ -34,7 +34,7 @@ exports.run = {
          }).then(async () => {
             const buffer = await Converter.toAudio(json.data.buffer, 'mp3')
             client.sendFile(m.chat, buffer, json.data.filename, '', m, {
-               document: true,
+               document: false,
                APIC: await Func.fetchBuffer(json.thumbnail)
             })
          })
