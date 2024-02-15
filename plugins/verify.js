@@ -38,14 +38,14 @@ exports.run = {
          style="width: 600px; height: 500px;margin: auto;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;">
          <div
              style="line-height: 2; letter-spacing: 0.5px; position: relative; padding: 10px 20px; width: 540px;min-height: 360px; margin: auto; border: 1px solid #DDD; border-radius: 14px;">
-             <h3> Hi <b>${m.pushName} 😘</b> Welcome to Lucifer - MD - an awesome Whatsapp Bot!</h3>
+             <h3> Hi <b>${m.pushName} 😘</b> Welcome to Lucifer - MD an awesome Whatsapp Bot!</h3>
              <p>
-                 end this code to the bot and it will expire in 3 minutes.<center>
+                 Send this code to the bot or it will expire in 3 minutes.<center>
                      <h1>${code}</h1>
-                 </center>Or copy and paste the URL below into your browser :
+                 </center>Or just click on the button below:
              <a style="cursor: pointer;text-align: center; display: block; width: 160px; margin: 30px auto; padding: 10px 10px; border: 1px solid #00FFFA; border-radius: 14px; color: #FF5700; text-decoration: none; font-size: 1rem; font-weight: 500;"
                  href="https://wa.me/${client.decodeJid(client.user.id).split`@`[0]}?text=${code}">Verify Your Account</a>
-             <span style="display: block;">.
+             <span style="display: block;">
                  <br>
                  <br>
                  If you have any problem, please contact via <span style="color: #4D96FF;"><a
@@ -53,7 +53,8 @@ exports.run = {
              <span style="display: block;"><br>Regards,<br>Ibrahim</span>
          </div>
      </div>
-     `
+     
+   `
       }
       transport.sendMail(mailOptions, function(err, data) {
          if (err) return m.reply(Func.texted('bold', `❌ SMTP Error !!`))
