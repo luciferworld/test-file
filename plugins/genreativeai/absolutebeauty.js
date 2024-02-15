@@ -3,7 +3,7 @@ const rsnchat = new RsnChat(process.env.RSGPT);
 exports.run = {
     usage: ['abs'],
     use: 'query',
-    category: 'generativeais',
+    category: 'generativeai',
     async: async (m, {
         client,
         text,

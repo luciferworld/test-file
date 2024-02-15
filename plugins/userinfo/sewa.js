@@ -1,7 +1,6 @@
 exports.run = {
 usage: ['groupbot'],
-use: 'mention or reply',
-category: 'user info',
+category: 'paidservices',
 async: async (m, {
    client,
    text,

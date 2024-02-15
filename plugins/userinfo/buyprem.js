@@ -1,7 +1,6 @@
 exports.run = {
-    usage: ['premium'],
-    use: 'mention or reply',
-    category: 'user info',
+    usage: ['buyprem'],
+   category: 'paidservices',
     async: async (m, {
        client,
        text,

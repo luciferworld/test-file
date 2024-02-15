@@ -8,6 +8,7 @@ exports.run = {
    client,
    args,
    isPrefix,
+   text,
    command,
    Func
 }) => {
@@ -31,11 +32,11 @@ exports.run = {
               pass: process.env.USER_APP_PASSWORD
            }
         })
-        var template = `<div style="padding:20px;border:1px dashed #222;font-size:15px"><tt>Hi <b>${users.name} 😘</b><br><br>${msg.trim()}<br><br><hr style="border:0px; border-top:1px dashed #222"><br>Regards, <b>Liv-Ai / mr.one√</b></tt></div>`
+        var template = `<div style="padding:20px;border:1px dashed #222;font-size:15px"><tt>Hi <b>${users.name} 😘</b><br><br>${msg.trim()}<br><br><hr style="border:0px; border-top:1px dashed #222"><br>Regards, <b>Lucifer MD/ Ibrahim</b></tt></div>`
         if (!mime) {
            const mailOptions = {
               from: {
-                 name: 'Lucifer - MD Verify (WHATSAPP BOT)',
+                 name: 'Lucifer - MD  (WHATSAPP BOT)',
                  address: process.env.USER_EMAIL
               },
               to: users.email,

@@ -1,7 +1,7 @@
 exports.run = {
    usage: ['google', 'goimg'],
    use: 'query',
-   category: 'search',
+   category: 'searcher',
    async: async (m, {
       client,
       text,

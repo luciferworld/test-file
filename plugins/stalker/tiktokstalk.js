@@ -1,7 +1,7 @@
 exports.run = {
    usage: ['ttstalk'],
    use: 'username',
-   category: 'utilities',
+   category: 'stalker',
    async: async (m, {
       client,
       args,

@@ -1,6 +1,6 @@
 exports.run = {
    usage: ['apkdl'],
-   use: 'app id ',
+   use: 'app id',
    category: 'downloader',
    async: async (m, { client, args, isPrefix, command, Func }) => {
        try {
