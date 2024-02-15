@@ -56,7 +56,7 @@ exports.run = {
       }
       transport.sendMail(mailOptions, function(err, data) {
          if (err) return m.reply(Func.texted('bold', `❌ SMTP Error !!`))
-         return client.reply(m.chat, Func.texted('bold', `✅ Send the verification code from the bot to your email, immediately before it expires`), m)
+         return client.reply(m.chat, Func.texted('bold', `✅ Send the verification code from to your email to bot, immediately before it expires`), m)
       })
    } catch (e) {
       client.reply(m.chat, Func.jsonFormat(e), m)
