@@ -1,4 +1,4 @@
-const bimg = require("bimg-new");
+// bingimg.js
 
 exports.run = {
     usage: ['bing3'],
@@ -15,7 +15,11 @@ exports.run = {
         try {
             if (!text) return client.reply(m.chat, Func.example(isPrefix, command, 'girl'), m)
             client.sendReact(m.chat, '🕒', m.key)
-            const imageLinks = await bimg.generateImagesLinks(text)
+            
+            // Dynamically import the ES module
+            const bimgNew = await import('bimg-new');
+            const imageLinks = await bimgNew.generateImagesLinks(text);
+            
             m.reply(imageLinks)
         } catch (e) {
             return client.reply(m.chat, global.status.error, m)
