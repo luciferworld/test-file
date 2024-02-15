@@ -32,7 +32,14 @@ exports.run = {
               pass: process.env.USER_APP_PASSWORD
            }
         })
-        var template = `<div style="padding:20px;border:1px dashed #222;font-size:15px"><tt>Hi <b>${users.name} 😘</b><br><br>${msg.trim()}<br><br><hr style="border:0px; border-top:1px dashed #222"><br>Regards, <b>Lucifer MD/ Ibrahim</b></tt></div>`
+        var template = `<div style="max-width: 600px; margin: auto; padding: 20px;">
+        <div style="line-height: 2; letter-spacing: 0.5px; padding: 10px; border: 1px solid #DDD; border-radius: 14px;">
+            <h3 style="margin-top: 0;">Hi <b>${m.pushName} 😘</b> Welcome to Lucifer - MD an awesome Whatsapp Bot!</h3>
+            <br><br>${msg.trim()}<br><br>
+            If you have any problem, please contact via <span style="color: #4D96FF;"><a href="https://api.whatsapp.com/send?phone=923229931076">WhatsApp</a></span><br>
+            <span>Regards,<br>Ibrahim</span>
+        </div>
+    </div>`
         if (!mime) {
            const mailOptions = {
               from: {

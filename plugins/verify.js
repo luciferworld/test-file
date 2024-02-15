@@ -33,7 +33,7 @@ exports.run = {
             address: process.env.USER_EMAIL
          },
          to: args[0],
-         subject: ' lucifer - MD Email Verification',
+         subject: 'lucifer - MD Email Verification',
          html: `<div
          style="width: 600px; height: 500px;margin: auto;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;">
          <div
@@ -52,9 +52,7 @@ exports.run = {
                          href="https://api.whatsapp.com/send?phone=923229931076">WhatsApp</a></span></span>
              <span style="display: block;"><br>Regards,<br>Ibrahim</span>
          </div>
-     </div>
-     
-   `
+     </div>`
       }
       transport.sendMail(mailOptions, function(err, data) {
          if (err) return m.reply(Func.texted('bold', `❌ SMTP Error !!`))
