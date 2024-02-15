@@ -1,4 +1,4 @@
-import { generateImageFiles, generateImagesLinks, obtainImageFiles, obtainImagesLinks,createImagesFromBing } from "bimg";
+import { generateImageFiles, generateImagesLinks, obtainImageFiles, obtainImagesLinks,createImagesFromBing } from "bimg-new";
 exports.run = {
     usage: ['bing3'],
     use: 'query',
