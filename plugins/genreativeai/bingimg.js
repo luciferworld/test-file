@@ -1,5 +1,4 @@
-const { generateImageFiles, generateImagesLinks } = require("bimg")
-const rsnchat = new RsnChat(process.env.RSGPT);
+import { generateImageFiles, generateImagesLinks, obtainImageFiles, obtainImagesLinks,createImagesFromBing } from "bimg";
 exports.run = {
     usage: ['bing3'],
     use: 'query',
