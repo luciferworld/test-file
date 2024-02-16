@@ -2,7 +2,7 @@ const fs = require('fs')
 const axios = require('axios')
 const decode = require('html-entities').decode
 exports.run = {
-   usage: ['get', 'fetch'],
+   usage: ['get'],
    category: 'owner',
    async: async (m, {
       client,
