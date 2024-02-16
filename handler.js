@@ -13,7 +13,6 @@ module.exports = async (client, ctx) => {
       require('./lib/system/schema')(m, env), InvCloud(store)
       const isOwner = [env.owner, client.decodeJid(client.user.id).split`@` [0], ...global.db.setting.owners].map(v => v + '@s.whatsapp.net').includes(m.sender)
       const isPrem = (global.db.users.some(v => v.jid == m.sender) && global.db.users.find(v => v.jid == m.sender).premium)
-      const isverify = (global.db.users.some(v => v.jid == m.sender) && global.db.users.find(v => v.jid == m.sender).verified)
       const groupMetadata = m.isGroup ? await client.groupMetadata(m.chat) : {}
       const participants = m.isGroup ? groupMetadata.participants : [] || []
       const adminList = m.isGroup ? await client.groupAdmin(m.chat) : [] || []
@@ -148,10 +147,6 @@ module.exports = async (client, ctx) => {
             }
             if (cmd.premium && !isPrem) {
                client.reply(m.chat, global.status.premium, m)
-               continue
-            }
-            if (cmd.verified && !isverify) {
-               client.reply(m.chat, global.status.verified, m)
                continue
             }
             if (cmd.limit && users.limit < 1) {
