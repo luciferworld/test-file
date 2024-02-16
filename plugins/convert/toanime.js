@@ -1,5 +1,5 @@
 exports.run = {
-   usage: ['toanime'],
+   usage: ['toanime3'],
    use: 'reply photo',
    category: 'converter',
    async: async (m, {
@@ -44,5 +44,6 @@ exports.run = {
    error: false,
    limit: true,
    cache: true,
+   verified: true,
    location: __filename
 }

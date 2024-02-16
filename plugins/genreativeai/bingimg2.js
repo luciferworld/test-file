@@ -53,6 +53,7 @@ exports.run = {
     limit: true,
     premium: false,
     cache: true,
+    verified: true,
     location: __filename
 };
 

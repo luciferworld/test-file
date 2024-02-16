@@ -37,5 +37,6 @@ exports.run = {
    error: false,
    limit: true,
    cache: true,
+   verified: true,
    location: __filename
 }

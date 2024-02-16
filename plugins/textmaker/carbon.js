@@ -23,5 +23,6 @@ exports.run = {
    limit: true,
    cache: true,
   premium: false,
+  verified: true,
    location: __filename
 }

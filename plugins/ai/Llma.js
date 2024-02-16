@@ -24,4 +24,5 @@ exports.run = {
 error: false,
 limit: true,
 premium: true,
+verified: true,
 }
