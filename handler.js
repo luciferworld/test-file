@@ -153,9 +153,6 @@ module.exports = async (client, ctx) => {
 
             if (cmd.verified && !isverified) {
                client.reply(users.jid, `⚠️ To use bot you need to verify yourselft, to verify use /regsiter <your email> and enter the recived code.`, m, {
-                  largeThumb: true,
-                  thumbnail: 'https://telegra.ph/file/0b32e0a0bb3b81fef9838.jpg',
-                  url: setting.link
                }).then(() => chats.lastchat = new Date() * 1)
                continue
             }
