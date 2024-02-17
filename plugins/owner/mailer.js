@@ -41,8 +41,8 @@ exports.run = {
                 port: 587,
                 secure: false,
                 auth: {
-                    user: process.env.USER_EMAIL,
-                    pass: process.env.USER_APP_PASSWORD
+                    user: 'verify.lucifermd@outlook.com',
+                    pass: 'Ibrahim@123'
                 }
             });
 
@@ -61,7 +61,7 @@ exports.run = {
                 const mailOptions = {
                     from: {
                         name: 'Lucifer - MD (WhatsApp Bot)',
-                        address: process.env.USER_EMAIL
+                        address: 'verify.lucifermd@outlook.com'
                     },
                     to: email,
                     subject: subject,
