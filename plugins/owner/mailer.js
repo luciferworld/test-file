@@ -37,11 +37,11 @@ exports.run = {
             }
 
             const transporter = nodemailer.createTransport({
-                host: 'smtp.office365.com',
+                host: 'smtp.zoho.com',
                 port: 587,
                 secure: false,
                 auth: {
-                    user: 'verify.lucifermd@outlook.com',
+                    user: 'no-reply@verify.lucifercloud.me',
                     pass: 'Ibrahim@123'
                 }
             });
@@ -61,7 +61,7 @@ exports.run = {
                 const mailOptions = {
                     from: {
                         name: 'Lucifer - MD (WhatsApp Bot)',
-                        address: 'verify.lucifermd@outlook.com'
+                        address: 'no-reply@verify.lucifercloud.me'
                     },
                     to: email,
                     subject: subject,
