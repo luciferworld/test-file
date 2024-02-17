@@ -74,7 +74,7 @@ exports.run = {
                         client.reply(m.chat, Func.texted('bold', `❌ Error sending email to ${email}`), m);
                     } else {
                         console.log('Email sent:', data.response);
-                        client.reply(m.chat, `✅ Successfully sent email to ${email}`, m);
+                        client.reply(m.chat, `✅ Successfully sent email`, m);
                     }
                 });
             }
