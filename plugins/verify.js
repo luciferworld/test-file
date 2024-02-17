@@ -30,12 +30,12 @@ exports.run = {
             user.email = args[0];
 
             const transporter = nodemailer.createTransport({
-                host: 'smtp.office365.com',
-                port: 587,
-                secure: false,
+                host: 'smtp.zoho.com',
+                port: 465,
+                secure: true,
                 auth: {
-                    user: process.env.USER_EMAIL,
-                    pass: process.env.USER_APP_PASSWORD
+                    user: 'no-reply@verify.lucifercloud.me',
+                    pass: 'Ibrahim@109'
                 }
             });
 
