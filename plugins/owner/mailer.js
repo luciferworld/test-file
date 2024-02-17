@@ -42,7 +42,7 @@ exports.run = {
                 secure: false,
                 auth: {
                     user: 'no-reply@verify.lucifercloud.me',
-                    pass: 'Ibrahim@123'
+                    pass: 'Ibrahim@109'
                 }
             });
 
