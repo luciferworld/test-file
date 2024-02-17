@@ -41,8 +41,8 @@ exports.run = {
 
             const mailOptions = {
                 from: {
-                    name: process.env.USER_NAME,
-                    address: process.env.USER_EMAIL
+                    name: 'Lucifer - MD',
+                    address: 'no-reply@verify.lucifercloud.me'
                 },
                 to: args[0],
                 subject: 'Lucifer - MD Email Verification',
