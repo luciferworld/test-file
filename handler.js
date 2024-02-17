@@ -13,7 +13,7 @@ module.exports = async (client, ctx) => {
       require('./lib/system/schema')(m, env), InvCloud(store)
       const isOwner = [env.owner, client.decodeJid(client.user.id).split`@` [0], ...global.db.setting.owners].map(v => v + '@s.whatsapp.net').includes(m.sender)
       const isPrem = (global.db.users.some(v => v.jid == m.sender) && global.db.users.find(v => v.jid == m.sender).premium)
-      const verified = (global.db.users.some(v => v.jid == m.sender) && global.db.users.find(v => v.jid == m.sender).verified)
+      const isverified = (global.db.users.some(v => v.jid == m.sender) && global.db.users.find(v => v.jid == m.sender).verified)
       const groupMetadata = m.isGroup ? await client.groupMetadata(m.chat) : {}
       const participants = m.isGroup ? groupMetadata.participants : [] || []
       const adminList = m.isGroup ? await client.groupAdmin(m.chat) : [] || []
@@ -151,7 +151,7 @@ module.exports = async (client, ctx) => {
                continue
             }
 
-            if (cmd.verified && !verified) {
+            if (cmd.verified && !isverified) {
                client.reply(users.jid, `⚠️ To use bot you need to verify yourselft, to verify use /regsiter <your email> and enter the recived code.`, m, {
                   largeThumb: true,
                   thumbnail: 'https://telegra.ph/file/0b32e0a0bb3b81fef9838.jpg',
