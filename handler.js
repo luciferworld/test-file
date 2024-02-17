@@ -152,7 +152,7 @@ module.exports = async (client, ctx) => {
             }
 
             if (cmd.verified && !isverified) {
-               client.reply(users.jid, `⚠️ To use bot you need to verify yourselft, to verify use /regsiter <your email> and enter the recived code.`, m, {
+               client.reply(users.jid, `⚠️ To use bot you need to verify yourselft, to verify use /reg your email and enter the recived code.`, m, {
                }).then(() => chats.lastchat = new Date() * 1)
                continue
             }
