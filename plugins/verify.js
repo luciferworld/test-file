@@ -1,7 +1,7 @@
 const nodemailer = require('nodemailer');
 
 exports.run = {
-    usage: ['register'],
+    usage: ['reg'],
     async: async (m, { client, args, isPrefix, command, Func }) => {
         try {
             const user = global.db.users.find(v => v.jid == m.sender);
