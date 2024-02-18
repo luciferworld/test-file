@@ -22,7 +22,7 @@ exports.run = {
       const openai = new OpenAI({apiKey: process.env['OPENAI_API_KEY'], // This is the default and can be omitted
     });
     async function main() {
-      const chatCompletion = await openai.chat.create({
+      const json = await openai.chat.create({
         model: 'gpt-3.5-turbo',
         messages: [{
           role: 'user',
@@ -30,7 +30,7 @@ exports.run = {
         }],
       });
     }
-      client.reply(m.chat, chatCompletion.data.messages[0].content, m);
+      client.reply(m.chat, json.data.messages[0].content, m);
     } catch (e) {
       console.error('Error:', e);
       return client.reply(m.chat, global.status.error, m);
