@@ -21,14 +21,15 @@ exports.run = {
       client.sendReact(m.chat, '🕒', m.key)
       const openai = new OpenAI({apiKey: process.env['OPENAI_API_KEY'], // This is the default and can be omitted
     });
-    const json = await openai.chat.create({
+    async function main() {
+      const json = await openai.chat.create({
         model: 'gpt-3.5-turbo',
         messages: [{
           role: 'user',
           content: text
         }],
       });
-    
+    }
       client.reply(m.chat, json.data.messages[0].content, m);
     } catch (e) {
       console.error('Error:', e);
