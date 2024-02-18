@@ -1,6 +1,6 @@
 exports.run = {
     usage: ['blackbox'],
-    use: 'query <𝘱𝘳𝘦𝘮𝘪𝘶𝘮>',
+    use: 'query',
     category: 'ai',
     async: async (m, {
       client,
@@ -22,5 +22,5 @@ exports.run = {
 error: false,
 limit: true,
 verified: true,
-premium: true,
+premium: false,
 }

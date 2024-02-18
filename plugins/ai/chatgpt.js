@@ -1,5 +1,5 @@
 exports.run = {
-    usage: ['chatgpt'],
+    usage: ['chatgpt2'],
     use: 'query',
     category: 'ai',
     async: async (m, {
