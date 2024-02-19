@@ -73,10 +73,9 @@ module.exports = async (client, ctx) => {
       }
       if (m.isGroup) {
          let is_group = global.db.groups.find(group => group.jid == m.chat);
-         if (is_group && !is_group.banned) {
-             // Group is not banned, continue with your logic
+         if (is_group && is_group.banned) {
+             client.reply(m.chat, "This group is banned from using the bot.", m);
          }
-         // No reply here
      }
         
       cron.schedule('00 00 * * *', () => {
