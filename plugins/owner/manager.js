@@ -1,5 +1,5 @@
 exports.run = {
-   usage: ['+owner', '-owner', '-prem', 'block', 'unblock', 'ban', 'unban'],
+   usage: ['+owner', '-owner', '-prem', 'block', 'unblock', 'ban', 'unban', 'banchat', 'unbanchat'],
    use: 'mention or reply',
    category: 'owner',
    async: async (m, {
@@ -58,7 +58,18 @@ exports.run = {
             is_user.find(v => v.jid == jid).banned = false
             let banned = is_user.filter(v => v.banned).length
             client.reply(m.chat, `乂  *U N B A N N E D*\n\n*“Succesfully removing @${jid.split`@`[0]} from banned list.”*\n\n*Total : ${banned}*`, m)
+         } else if (command == 'banchat') { // banned user
+            let is_user = global.db.groups
+            let banned = is_user.filter(v => v.banned).length
+            client.reply(m.chat, `乂  *C H A T B A N N E D*\n\n*Successfully*`, m)
          }
+         else if (command == 'unbanchat') { // unbanned user
+            let is_user = global.db.groups
+            if (!is_user.find(v => v.jid == jid).banned) return client.reply(m.chat, Func.texted('bold', `🚩 Target not banned.`), m)
+            is_user.find(v => v.jid == jid).banned = false
+            let banned = is_user.filter(v => v.banned).length
+            client.reply(m.chat, `乂  *C H A T U N B A N N E D*\n\n*“Succesfully*`, m)
+         } 
       } catch (e) {
          client.reply(m.chat, Func.jsonFormat(e), m)
       }
