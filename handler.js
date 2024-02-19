@@ -71,6 +71,14 @@ module.exports = async (client, ctx) => {
          users.afk = -1
          users.afkReason = ''
       }
+      if (m.isGroup) {
+         let is_group = global.db.groups.find(group => group.jid == m.chat);
+         if (is_group && !is_group.banned) {
+             // Group is not banned, continue with your logic
+         }
+         // No reply here
+     }
+        
       cron.schedule('00 00 * * *', () => {
          setting.lastReset = new Date * 1
          global.db.users.filter(v => v.limit < env.limit && !v.premium).map(v => v.limit = env.limit)
