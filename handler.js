@@ -73,7 +73,7 @@ module.exports = async (client, ctx) => {
       }
       if (m.isGroup) {
          let is_group = global.db.groups.find(group => group.jid == m.chat);
-          if (is_group && is_group.banned && !isOwner) {
+          if (is_group && is_group.banned && isOwner) {
              return; // Exit the function if the group is banned and the user is not the owner
          }
          
