@@ -59,15 +59,13 @@ exports.run = {
             let banned = is_user.filter(v => v.banned).length
             client.reply(m.chat, `乂  *U N B A N N E D*\n\n*“Succesfully removing @${jid.split`@`[0]} from banned list.”*\n\n*Total : ${banned}*`, m)
          } else if (command == 'chatban') { // banned user
-            let is_user = global.db.groups
             let banned = global.db.groups[m.chat].banned = true;
             client.reply(m.chat, `乂  *C H A T B A N N E D*\n\n*Successfully*`, m)
          }
          else if (command == 'chatunban') { // unbanned user
-            let is_user = global.db.groups
-            if (!global.db.groups[m.chat].banned) return client.reply(m.chat, Func.texted('bold', `🚩 Target not banned.`), m)
+           if (!global.db.groups[m.chat].banned) return client.reply(m.chat, Func.texted('bold', `🚩 Target not banned.`), m)
              let banned = global.db.groups[m.chat].banned = false;
-            client.reply(m.chat, `乂  *C H A T U N B A N N E D*\n\n*“Succesfully*`, m)
+            client.reply(m.chat, `乂  *C H A T  U N B A N N E D*\n\n*“Succesfully*`, m)
          } 
       } catch (e) {
          client.reply(m.chat, Func.jsonFormat(e), m)
