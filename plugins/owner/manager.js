@@ -58,7 +58,7 @@ exports.run = {
             is_user.find(v => v.jid == jid).banned = false
             let banned = is_user.filter(v => v.banned).length
             client.reply(m.chat, `乂  *U N B A N N E D*\n\n*“Succesfully removing @${jid.split`@`[0]} from banned list.”*\n\n*Total : ${banned}*`, m)
-         } else if (command == 'groupban') { // ban group from using the bot
+         } else if (command == 'banchat') { // ban group from using the bot
             if (!m.isGroup) return client.reply(m.chat, 'This command can only be used in a group chat.', m);
             let is_group = global.db.groups;
             if (!is_group.some(v => v.jid == m.chat)) return client.reply(m.chat, Func.texted('bold', `🚩 Group data not found.`), m);
@@ -66,7 +66,7 @@ exports.run = {
             is_group.find(v => v.jid == m.chat).banned = true;
             let bannedGroups = is_group.filter(v => v.banned).length;
             client.reply(m.chat, `乂 *GROUP BANNED*\n\n*“Successfully banned the group from using the bot.”*`, m);
-          }else if (command == 'groupunban') { // unban group from using the bot
+          }else if (command == 'unbanchat') { // unban group from using the bot
             if (!m.isGroup) return client.reply(m.chat, 'This command can only be used in a group chat.', m);
             let is_group = global.db.groups;
             if (!is_group.some(v => v.jid == m.chat)) return client.reply(m.chat, Func.texted('bold', `🚩 Group data not found.`), m);
