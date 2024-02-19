@@ -1,5 +1,5 @@
 exports.run = {
-   usage: ['+owner', '-owner', '-prem', 'block', 'unblock', 'ban', 'unban', 'banchat', 'unbanchat'],
+   usage: ['+owner', '-owner', '-prem', 'block', 'unblock', 'ban', 'unban', 'chatban', 'chatunban'],
    use: 'mention or reply',
    category: 'owner',
    async: async (m, {
