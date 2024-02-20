@@ -14,7 +14,7 @@ exports.run = {
       if (!text) return client.reply(m.chat, Func.example(isPrefix, command, 'what is java script'), m)
       const processingMessage = await m.reply("Processing your request..."); // Send placeholder message
       const json = await Func.fetchJson(`https://api.betabotz.eu.org/api/search/blackbox-chat?text=${text}&apikey=beta-Ibrahim1209`);
-      await client.modifyChat(m.chat, processingMessage.id, json.message); // Edit placeholder message with result
+      await client.sendMessage(m.chat, processingMessage.id, json.message); // Edit placeholder message with result
       } catch (e) {
         console.error(e);
         return client.reply(m.chat, global.status.error, m);
