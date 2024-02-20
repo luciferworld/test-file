@@ -11,7 +11,7 @@ exports.run = {
        Func
     }) => {
        try {
-        w5botapi.ephoto2("https://en.ephoto360.com/create-a-blackpink-style-logo-with-members-signatures-810.html#google_vignette", ["ibrahim"])
+        await w5botapi.ephoto2("https://ephoto360.com/hieu-ung-chu-tren-nen-cat-trang-tuyet-dep-663.html", ["text"])
         .then((data) => console.log(data))
         .catch((err) => console.log(err));
        } catch (e) {
