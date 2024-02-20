@@ -17,7 +17,7 @@ exports.run = {
 
       const json = await Func.fetchJson(`https://api.betabotz.eu.org/api/search/blackbox-chat?text=${text}&apikey=beta-Ibrahim1209`);
       
-      await client.sendMessageModify(m.chat, processingMessage.key.id, { content: json.message }); // Edit placeholder message with result
+      await client.sendMessageModify(m.chat, processingMessage, { content: json.message }); // Edit placeholder message with result
     } catch (e) {
       console.error(e);
       return client.reply(m.chat, global.status.error, m);
