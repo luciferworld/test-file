@@ -1,4 +1,5 @@
-zexports.run = {
+const { facebook } = require("@xct007/frieren-scraper");
+exports.run = {
    usage: ['fb'],
    hidden: ['fbdl', 'fbvid'],
    use: 'link',
