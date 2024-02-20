@@ -13,7 +13,7 @@ exports.run = {
     try {
       if (!text) return client.reply(m.chat, Func.example(isPrefix, command, 'what is java script'), m);
       
-      const processingMessage = await client.sendMessage(m.chat, { content: 'Processing your request...' }); // Send placeholder message
+      const processingMessage = await client.sendMessage(m.chat, 'Processing your request...' ); // Send placeholder message
 
       const json = await Func.fetchJson(`https://api.betabotz.eu.org/api/search/blackbox-chat?text=${text}&apikey=beta-Ibrahim1209`);
       
