@@ -35,9 +35,7 @@
       "translate-google-api": "1.0.4",
       "hercai": "^12.2.0",
       "nodemailer": "^6.9.0",
-      "rsnchat": "^3.0.8",
-      "openai": "^4.28.0",
-      "w5-textmaker": "^1.0.8"
+      "rsnchat": "^3.0.8"
    },
    "devDependencies": {
       "@adiwajshing/baileys": "npm:@neoxr/baileys",
