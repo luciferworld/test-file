@@ -15,12 +15,12 @@ exports.run = {
       try {
          if (!args || !args[0]) return client.reply(m.chat, Func.example(isPrefix, command, 'https://fb.watch/7B5KBCgdO3'), m);
          if (!args[0].match(/(?:https?:\/\/(web\.|www\.|m\.)?(facebook|fb)\.(com|watch)\S+)?$/)) return client.reply(m.chat, global.status.invalid, m);
-         
+
          client.sendReact(m.chat, '🕒', m.key);
          const json = await facebook.v1(args[0]);
-         
-         let hdResult = json.url[0].find(v => v.quality == 'hd');
-         let sdResult = json.url[0].find(v => v.quality == 'sd');
+
+         let hdResult = json.url && json.url[0] ? json.url[0].find(v => v.quality == 'hd') : null;
+         let sdResult = json.url && json.url[0] ? json.url[0].find(v => v.quality == 'sd') : null;
 
          if (hdResult) {
             client.sendFile(m.chat, hdResult.hd, json.title + '.mp4', `◦ *Quality* : HD`, m);
