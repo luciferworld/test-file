@@ -71,19 +71,7 @@ module.exports = async (client, ctx) => {
          users.afk = -1
          users.afkReason = ''
       }
-      if (m.isGroup) {
-         let is_group = global.db.groups.find(group => group.jid == m.chat);
-         let isOwner = [client.decodeJid(client.user.id).split`@`[0], env.owner, ...global.db.setting.owners].map(v => v.replace(/[^0-9]/g, '') + '@s.whatsapp.net').includes(m.sender);
-     
-         if (is_group && is_group.banned && !isOwner) {
-             return; // Exit the function if the group is banned and the user is not the owner
-         }
-         
-         // Process other commands here for the owner or when the group is not banned
-         if (!isOwner) {
-             // Process commands for non-owner users here
-         }
-     }
+      
         
       cron.schedule('00 00 * * *', () => {
          setting.lastReset = new Date * 1

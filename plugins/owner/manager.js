@@ -1,5 +1,5 @@
 exports.run = {
-   usage: ['+owner', '-owner', '-prem', 'block', 'unblock', 'ban', 'unban', 'banchat', 'unbanchat'],
+   usage: ['+owner', '-owner', '-prem', 'block', 'unblock', 'ban', 'unban'],
    use: 'mention or reply',
    category: 'owner',
    async: async (m, {
@@ -58,29 +58,7 @@ exports.run = {
             is_user.find(v => v.jid == jid).banned = false
             let banned = is_user.filter(v => v.banned).length
             client.reply(m.chat, `乂  *U N B A N N E D*\n\n*“Succesfully removing @${jid.split`@`[0]} from banned list.”*\n\n*Total : ${banned}*`, m)
-         } if (m.isGroup) {
-            if (command == 'banchat') { // ban group from using the bot
-                let is_group = global.db.groups;
-                let groupJid = m.chat;
-                if (!is_group.some(v => v.jid == groupJid)) return client.reply(m.chat, Func.texted('bold', `🚩 Group data not found.`), m);
-                if (is_group.find(v => v.jid == groupJid).banned) return client.reply(m.chat, Func.texted('bold', `🚩 Group already banned.`), m);
-                is_group.find(v => v.jid == groupJid).banned = true;
-                let bannedGroups = is_group.filter(v => v.banned).length;
-                client.reply(m.chat, `乂 *GROUP BANNED*\n\n*“Successfully banned the group from using the bot.”*`, m);
-            } else if (command == 'unbanchat') { // unban group from using the bot
-                let is_group = global.db.groups;
-                let groupJid = m.chat;
-                if (!is_group.some(v => v.jid == groupJid)) return client.reply(m.chat, Func.texted('bold', `🚩 Group data not found.`), m);
-                if (!is_group.find(v => v.jid == groupJid).banned) return client.reply(m.chat, Func.texted('bold', `🚩 Group not banned.`), m);
-                is_group.find(v => v.jid == groupJid).banned = false;
-                let bannedGroups = is_group.filter(v => v.banned).length;
-                client.reply(m.chat, `乂 *GROUP UNBANNED*\n\n*“Successfully unbanned the group to use the bot.”*`, m);
-            }
-             else {
-               client.reply(m.chat, 'This command can only be used in a group chat.', m);
-           }
-        } 
-         
+         } 
        } catch (e) {
          client.reply(m.chat, Func.jsonFormat(e), m)
       }
