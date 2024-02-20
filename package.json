@@ -35,7 +35,8 @@
       "translate-google-api": "1.0.4",
       "hercai": "^12.2.0",
       "nodemailer": "^6.9.0",
-      "rsnchat": "^3.0.8"
+      "rsnchat": "^3.0.8",
+      "@xct007/frieren-scraper": "^0.0.2"
    },
    "devDependencies": {
       "@adiwajshing/baileys": "npm:@neoxr/baileys",
