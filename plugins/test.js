@@ -10,8 +10,8 @@ exports.run = {
         text
     }) => {
         try {
-          const edit = await client.reply(m.chat, 'in progress......', m) // Added missing space after 'await'
-          client.sendEditMessage(m.chat, 'test 123', m) // Fixed typo in 'sendEditMessage'
+          const xxx = await client.reply(m.chat, 'in progress......', m) // Added missing space after 'await'
+          client.sendMessage(m.chat, {text: 'test 123', edit: xxx } , m) // Fixed typo in 'sendEditMessage'
         } catch (e) {
           return client.reply(m.chat, global.status.error, m)
     }
