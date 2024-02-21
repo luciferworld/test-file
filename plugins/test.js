@@ -1,3 +1,5 @@
+let botHasSentMessage = false;
+
 exports.run = {
     usage: ['test'],
     category: 'beta',
@@ -10,11 +12,19 @@ exports.run = {
         text
     }) => {
         try {
-          const xxx = await client.reply(m.chat, 'in progress......', m) // Added missing space after 'await'
-          client.sendEditMessage(m.chat, {text: 'test 123', edit: xxx }) // Fixed typo in 'sendEditMessage'
+            // Check if the bot has sent a message before in this conversation
+            if (!botHasSentMessage) {
+                const edit = await client.reply(m.chat, 'in progress......', m);
+                botHasSentMessage = true; // Set the flag to true after sending the first message
+            }
+            
+            // Your actual processing here
+            // For example:
+            const response = 'This is the actual response.';
+            client.sendEditMessage(m.chat, response, m);
         } catch (e) {
-          return client.reply(m.chat, global.status.error, m)
-    }
-     },
+            return client.reply(m.chat, global.status.error, m);
+        }
+    },
     error: false
- }
+};
