@@ -10,19 +10,11 @@ exports.run = {
         text
     }) => {
         try {
-      client.sendMessageModify(m.chat, `Test!`, m, {
-        title: '© neoxr-bot',
-        largeThumb: true,
-        ads: false,
-        /* can buffer or url */
-        thumbnail: 'https://iili.io/HP3ODj2.jpg',
-        link: 'https://chat.whatsapp.com/HYknAquOTrECm9KPJJQO1V'
-     })
+          const edit = await client.reply(m.chat, 'in progress......', m) // Added missing space after 'await'
+          client.sendEditMessage(m.chat, 'json.message', {lastMessages: [edit] }, m) // Fixed typo in 'sendEditMessage'
+        } catch (e) {
+          return client.reply(m.chat, global.status.error, m)
     }
-      catch (e) {
-        
-        return client.reply(m.chat, global.status.error, m)
-     }
-    },
+     },
     error: false
  }
