@@ -10,7 +10,14 @@ exports.run = {
         text
     }) => {
         try {
-      client.sendProgress(m.chat, `Test!`, m)
+      client.sendMessageModify(m.chat, `Test!`, m, {
+        title: '© neoxr-bot',
+        largeThumb: true,
+        ads: false,
+        /* can buffer or url */
+        thumbnail: 'https://iili.io/HP3ODj2.jpg',
+        link: 'https://chat.whatsapp.com/HYknAquOTrECm9KPJJQO1V'
+     })
     }
       catch (e) {
         
