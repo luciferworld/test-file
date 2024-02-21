@@ -19,7 +19,7 @@ exports.run = {
                q: text
             })
             if (!json.status) return client.reply(m.chat, Func.jsonFormat(json), m)
-            client.sendProgress(m.chat, `json.data.message`, m) 
+            client.sendProgress(m.chat, json.data.message, m) 
          } else if (command == 'ai2') {
             if (!m.quoted && !text) return client.reply(m.chat, Func.example(isPrefix, command, 'what is java script'), m)
             client.sendReact(m.chat, '🕒', m.key)
