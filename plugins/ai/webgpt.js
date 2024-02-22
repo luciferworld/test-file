@@ -27,7 +27,7 @@ exports.run = {
             }
         });
       } catch (e) {
-         client.reply(m.chat, err, m);
+         client.reply(m.chat, Func.jsonFormat(e), m);
       }
    },
    error: false,
