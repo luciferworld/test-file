@@ -16,7 +16,7 @@ exports.run = {
          
          client.sendReact(m.chat, '🕒', m.key);
          
-         const json = await gpt({
+         const json =  gpt({
             messages: [
                {
                   role: "assistant",
