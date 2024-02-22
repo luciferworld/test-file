@@ -22,9 +22,9 @@ exports.run = {
             markdown: false
         }, (err, data) => {
             if(err != null){
-                m.reply(err);
+                console.log(err);
             } else {
-                m.reply(data,gpt);
+                m.reply(data.gpt);
             }
         });
       } catch (e) {
