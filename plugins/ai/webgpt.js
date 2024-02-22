@@ -1,7 +1,7 @@
 const { gpt } = require("gpti");
 
 exports.run = {
-   usage: ['chatgpt4'],
+   usage: ['webgpt'],
    use: 'prompt',
    category: 'ai',
    async: async (m, {
@@ -16,22 +16,18 @@ exports.run = {
          
          client.sendReact(m.chat, '🕒', m.key);
          
-         gpt({
-            messages: [
-               
-            ],
+         gptweb({
             prompt: `${text}`,
-            model: "GPT-4",
             markdown: false
         }, (err, data) => {
             if(err != null){
-                console.log(err);
+                m.reply(err);
             } else {
-                m.reply(data.gpt);
+                m.reply(data,gpt);
             }
         });
       } catch (e) {
-         client.reply(m.chat, Func.jsonFormat(e), m);
+         client.reply(m.chat, err, m);
       }
    },
    error: false,
