@@ -16,15 +16,9 @@ exports.run = {
                 client.sendReact(m.chat, '🕒', m.key);
                 bing({
                     messages: [
-                        {
-                            role: "assistant",
-                            content: "Hello! How can I help you today? 😊"
-                        },
-                        {
-                            role: "user",
-                            content: `${text}`
-                        },
+                        
                     ],
+                    prompt: `${text}`,
                     conversation_style: "Balanced",
                     markdown: false,
                     stream: false,
