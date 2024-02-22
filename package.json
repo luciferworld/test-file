@@ -36,7 +36,8 @@
       "hercai": "^12.2.0",
       "nodemailer": "^6.9.0",
       "rsnchat": "^3.0.8",
-      "@xct007/frieren-scraper": "^0.0.2"
+      "@xct007/frieren-scraper": "^0.0.2",
+      "gpti": "^2.0.6"
    },
    "devDependencies": {
       "@adiwajshing/baileys": "npm:@neoxr/baileys",
