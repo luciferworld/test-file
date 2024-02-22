@@ -12,20 +12,17 @@ exports.run = {
       Func
    }) => {
       try {
-        gpt({
+         if (!m.quoted && !text) return client.reply(m.chat, Func.example(isPrefix, command, 'what is java script'), m);
+         
+         client.sendReact(m.chat, '🕒', m.key);
+         
+         const json = await gpt({
             messages: [
-                
             ],
-            prompt: "how are you",
+            prompt: `${text}`,
             model: "GPT-4",
             markdown: false
-        }, (err, data) => {
-            if(err != null){
-                console.log(err);
-            } else {
-                console.log(data);
-            }
-        });
+         });
 
          client.reply(m.chat, json.gpt, m);
       } catch (e) {
