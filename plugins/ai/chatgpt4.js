@@ -18,6 +18,10 @@ exports.run = {
          
          gpt({
             messages: [
+                {
+                    role: "user",
+                    content: `${m.chat}`
+                },
                
             ],
             prompt: `${text}`,
