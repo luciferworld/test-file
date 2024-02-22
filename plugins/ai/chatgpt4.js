@@ -16,35 +16,21 @@ exports.run = {
          
          client.sendReact(m.chat, '🕒', m.key);
          
-         const json =  gpt({
+         gpt({
             messages: [
-               {
-                  role: "assistant",
-                  content: "Hello! How are you today?"
-               },
-               {
-                  role: "user",
-                  content: "Hello, my name is Yandri."
-               },
-               {
-                  role: "assistant",
-                  content: "Hello, Yandri! How are you today?"
-               }
+               
             ],
             prompt: `${text}`,
             model: "GPT-4",
             markdown: false
-         });
-
-         if (json && json.gpt) {
-            client.reply(m.chat, json.gpt, m);
-         } else {
-            // Handle case where json or json.gpt is undefined
-            console.error("Unexpected response from GPT API:", json);
-            client.reply(m.chat, "Unexpected response from GPT API", m);
-         }
+        }, (err, data) => {
+            if(err != null){
+                console.log(err);
+            } else {
+                m.reply(gpt);
+            }
+        });
       } catch (e) {
-         console.error("Error in GPT API request:", e);
          client.reply(m.chat, Func.jsonFormat(e), m);
       }
    },
