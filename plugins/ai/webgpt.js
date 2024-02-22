@@ -1,4 +1,4 @@
-const { gpt } = require("gpti");
+const { gptweb  } = require("gpti");
 
 exports.run = {
    usage: ['webgpt'],
@@ -16,7 +16,8 @@ exports.run = {
          
          client.sendReact(m.chat, '🕒', m.key);
          
-         gptweb({
+       gptweb({
+
             prompt: `${text}`,
             markdown: false
         }, (err, data) => {
