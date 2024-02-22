@@ -14,20 +14,9 @@ exports.run = {
       try {
         gpt({
             messages: [
-                {
-                    role: "assistant",
-                    content: "Hello! How are you today?"
-                },
-                {
-                    role: "user",
-                    content: "Hello, my name is Yandri."
-                },
-                {
-                    role: "assistant",
-                    content: "Hello, Yandri! How are you today?"
-                }
+                
             ],
-            prompt: "Can you repeat my name?",
+            prompt: "how are you",
             model: "GPT-4",
             markdown: false
         }, (err, data) => {
@@ -37,6 +26,8 @@ exports.run = {
                 console.log(data);
             }
         });
+
+         client.reply(m.chat, json.gpt, m);
       } catch (e) {
          client.reply(m.chat, Func.jsonFormat(e), m);
       }
