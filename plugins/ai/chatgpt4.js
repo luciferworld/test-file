@@ -27,7 +27,7 @@ exports.run = {
             if(err != null){
                 console.log(err);
             } else {
-                m.reply(gpt);
+                m.reply(data.gpt);
             }
         });
       } catch (e) {
