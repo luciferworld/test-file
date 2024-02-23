@@ -1,5 +1,4 @@
-const { RsnChat } = require("rsnchat");
-const rsnchat = new RsnChat(process.env.RSGPT);
+const {dallE} = require("haji-api/modules/ai");
 exports.run = {
     usage: ['dalle3'],
     use: 'query',
