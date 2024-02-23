@@ -15,7 +15,7 @@ exports.run = {
             if (Array.isArray(results)) {
                 // Send each image to the user
                 for (let url of results) {
-                    client.sendFile(m.chat, url, 'image.jpg', 'Here is the generated image.', m);
+                    client.sendFile(m.chat, url, 'image.jpg', '', m);
                 }
             } else {
                 console.log(results); // Log if the results are not in the expected format
