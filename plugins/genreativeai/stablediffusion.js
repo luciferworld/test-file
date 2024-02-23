@@ -1,4 +1,5 @@
 const { stablediffusion } = require("gpti");
+
 exports.run = {
     usage: ['stable'],
     use: 'query',
@@ -12,25 +13,33 @@ exports.run = {
         Func
     }) => {
         try {
+            if (!text) return client.reply(m.chat, Func.example(isPrefix, command, 'a girl'), m)
+            client.sendReact(m.chat, '🕒', m.key)
+
             stablediffusion.v2({
-                prompt: "An serene sunset landscape where a river winds through gentle hills covered in trees. The sky is tinged with warm and soft tones, with scattered clouds reflecting the last glimmers of the sun.",
+                prompt: `${text}`,
                 data: {
                     prompt_negative: "",
                     guidance_scale: 9
                 }
             }, (err, data) => {
-                if(err != null){
+                if (err) {
                     console.log(err);
-                } else {
-                    console.log(data);
+                    return client.reply(m.chat, 'An error occurred while processing your request.', m);
                 }
+
+                // Handle the response from the API
+                const imageData = data.images[0]; // Assuming there's only one image
+                const buffer = Buffer.from(imageData.split(',')[1], 'base64');
+                client.sendFile(m.chat, buffer, 'image.jpg', `◦  *Prompt* : ${text}`, m);
             });
         } catch (e) {
-            return client.reply(m.chat, global.status.error, m)
+            console.error(e);
+            return client.reply(m.chat, 'An error occurred while processing your request.', m);
         }
     },
     error: false,
     limit: true,
     premium: false,
-    verified: true,
-}
+    verified: false,
+};
