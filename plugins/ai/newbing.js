@@ -1,4 +1,6 @@
 const { bing } = require("gpti");
+const readline = require('readline');
+
 exports.run = {
     usage: ['bing', 'creative', 'precise'],
     use: 'prompt',
@@ -14,11 +16,16 @@ exports.run = {
             if (command == 'bing') {
                 if (!text) return client.reply(m.chat, Func.example(isPrefix, command, 'what is java script'), m);
                 client.sendReact(m.chat, '🕒', m.key);
+
+                // Define the user prompt
+                const userPrompt = {
+                    role: "user",
+                    content: `${text}` // Use the provided text as the user's prompt
+                };
+
+                // Send user prompt and bing messages
                 bing({
-                    messages: [
-                        
-                    ],
-                    prompt: `${text}`,
+                    messages: [userPrompt],
                     conversation_style: "Balanced",
                     markdown: false,
                     stream: false,
@@ -29,7 +36,6 @@ exports.run = {
                         m.reply(data.message);
                     }
                 });
-           
             }
         } catch (e) {
             client.reply(m.chat, Func.jsonFormat(e), m);
