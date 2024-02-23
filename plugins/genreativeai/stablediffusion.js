@@ -16,11 +16,12 @@ exports.run = {
             if (!text) return client.reply(m.chat, Func.example(isPrefix, command, 'a girl'), m)
             client.sendReact(m.chat, '🕒', m.key)
 
-            stablediffusion.v2({
+            stablediffusion.xl({
                 prompt: `${text}`,
                 data: {
                     prompt_negative: "",
-                    guidance_scale: 9
+                    image_style: "(No style)",
+                    guidance_scale: 7.5
                 }
             }, (err, data) => {
                 if (err) {
