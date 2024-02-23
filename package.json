@@ -39,8 +39,7 @@
       "@xct007/frieren-scraper": "^0.0.2",
       "gpti": "^2.0.6",
       "readline": "1.3.0",
-      "haji-api": "^1.0.47",
-      "bing-nodejs": "^1.0.3"
+      "haji-api": "^1.0.47"
       },
    "devDependencies": {
       "@adiwajshing/baileys": "npm:@neoxr/baileys",
