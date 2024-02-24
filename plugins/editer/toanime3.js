@@ -1,4 +1,4 @@
-const {photoToAnime} = require("haji-api/modules/image");
+const {photoToCartoon} = require("haji-api/modules/image");
 exports.run = {
     usage: ['toanime3'],
     use: 'reply photo',
@@ -18,7 +18,7 @@ exports.run = {
                 client.sendReact(m.chat, '🕒', m.key)
                 let img = await client.downloadMediaMessage(q)
                 let image = await Scraper.uploadImageV2(img)
-                photoToAnime({
+                photoToCartoon({
                     url: image.data.url
                 }).then(console.log);
              } else client.reply(m.chat, Func.texted('bold', `🚩 Only for photo.`), m)
@@ -30,7 +30,7 @@ exports.run = {
              client.sendReact(m.chat, '🕒', m.key)
              let img = await q.download()
              let image = await Scraper.uploadImageV2(img)
-             photoToAnime({
+             photoToCartoon({
                 url: image.data.url
             }).then(console.log);
           }
