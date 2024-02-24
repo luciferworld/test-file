@@ -1,4 +1,4 @@
-const {googlePlayDownload} = require("haji-api/modules/googleplay");
+const {logo2} = require("haji-api/modules/image");
 exports.run = {
     usage: ['sssd'],
     use: 'reply photo',
@@ -11,8 +11,8 @@ exports.run = {
        Scraper
     }) => {
        try {
-        googlePlayDownload({url: "https://play.google.com/store/apps/details?id=org.telegram.messenger"})
-        .then(console.log);
+        logo2("HA")
+    .then(console.log)
        } catch (e) {
           return client.reply(m.chat, Func.jsonFormat(e), m)
        }
