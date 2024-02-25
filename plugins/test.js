@@ -23,7 +23,7 @@ exports.run = {
                     return client.reply(m.chat, 'An error occurred while processing your request', m);
                 }
 
-                const images = data.images.slice(0, 4); // Get the first four images
+                const images = data.images[0].slice(0, 4); // Get the first four images
                 images.forEach((imageData, index) => {
                     const base64ImageData = imageData.split(",")[1];
                     const buffer = Buffer.from(base64ImageData, 'base64');
