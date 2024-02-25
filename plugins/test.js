@@ -27,7 +27,7 @@ exports.run = {
                 images.forEach((imageData, index) => {
                     const base64ImageData = imageData.split(",")[1];
                     const buffer = Buffer.from(base64ImageData, 'base64');
-                    client.sendFile(m.chat, buffer, `image_${index}.jpg`, `◦  *Prompt* : ${text}`, m);
+                    client.sendFile(m.chat, buffer, `image.jpg`, `◦  *Prompt* : ${text}`, m);
                 });
             });
         } catch (e) {
