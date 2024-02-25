@@ -23,17 +23,17 @@ exports.run = {
                     return client.reply(m.chat, 'An error occurred while processing your request', m);
                 }
                 
-                const buffer = Buffer.from(data.images[0], 'base64');
-                
-                client.sendFile(m.chat, buffer, 'image.jpg', `◦  *Prompt* : ${text}`, m);
+                const images = data.images;
+                images.forEach((imageData, index) => {
+                    const base64ImageData = imageData.split(",")[1];
+                    const buffer = Buffer.from(base64ImageData, 'base64');
+                    client.sendFile(m.chat, buffer, `image_${index}.jpg`, `◦  *Prompt* : ${text}`, m);
+                });
             });
         } catch (e) {
             console.error(e);
             return client.reply(m.chat, 'An unexpected error occurred', m);
         }
     },
-    error: false,
-    limit: true,
-    premium: false,
-    verified: true,
- }
+    error: false
+};
