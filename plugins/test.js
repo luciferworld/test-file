@@ -23,8 +23,7 @@ exports.run = {
                     return client.reply(m.chat, 'An error occurred while processing your request', m);
                 }
                 
-                const base64ImageData = data.images[0];
-                const buffer = Buffer.from(base64ImageData.split(",")[1], 'base64');
+                const buffer = Buffer.from(data.images[0], 'base64');
                 
                 client.sendFile(m.chat, buffer, 'image.jpg', `◦  *Prompt* : ${text}`, m);
             });
