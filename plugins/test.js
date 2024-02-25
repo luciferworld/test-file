@@ -1,4 +1,4 @@
-const { llama2 } = require("gpti");
+const { dalle } = require("gpti");
 exports.run = {
     usage: ['test'],
     category: 'beta',
@@ -11,21 +11,8 @@ exports.run = {
         text
     }) => {
         try {
-          llama2({
-            messages:  [
-               
-                {
-                    "role": "user",
-                    "content": "What is wwe"
-                }
-            ],
-            system_message: "",
-            temperature: 0.9,
-            max_tokens: 4096,
-            top_p: 0.6,
-            repetition_penalty: 1.2,
-            markdown: false,
-            stream: false
+          dalle.mini({
+            prompt: "An extensive green valley stretches toward imposing mountains, adorned with meadows and a winding stream. The morning sun paints the sky with warm tones, illuminating the landscape with a serenity that invites contemplation and peace."
         }, (err, data) => {
             if(err != null){
                 console.log(err);
