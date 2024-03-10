@@ -76,5 +76,7 @@ exports.run = {
             client.reply(m.chat, Func.jsonFormat(e), m);
         }
     },
-    __filename
+    error: false,
+   cache: true,
+   location: __filename
 };
