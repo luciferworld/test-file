@@ -1,30 +1,43 @@
-const { Function: Func, Logs, Scraper, InvCloud } = new(require('@neoxr/wb'))
+const { Function: Func, Logs, Scraper, Cooldown, Spam, InvCloud } = new(require('@neoxr/wb'))
 const env = require('./config.json')
 const cron = require('node-cron')
 const cache = new(require('node-cache'))({
    stdTTL: env.cooldown
 })
+const cooldown = new Cooldown(env.cooldown)
+const spam = new Spam({
+   RESET_TIMER: env.cooldown,
+   HOLD_TIMER: env.timeout,
+   PERMANENT_THRESHOLD: env.permanent_threshold,
+   NOTIFY_THRESHOLD: env.notify_threshold,
+   BANNED_THRESHOLD: env.banned_threshold
+})
+
 module.exports = async (client, ctx) => {
-   const { store, m, body, prefix, plugins, commands, args, command, text, prefixes } = ctx
+   const { store, m, body, prefix, plugins, commands, args, command, text, prefixes, core } = ctx
    // const context = m.message[m.mtype] || m.message.viewOnceMessageV2.message[m.mtype]
    // process.env['E_MSG'] = context.contextInfo ? Number(context.contextInfo.expiration) : 0
    try {
       // "InvCloud" reduces RAM usage and minimizes errors during rewrite (according to recommendations/suggestions from Baileys)
       require('./lib/system/schema')(m, env), InvCloud(store)
-      const isOwner = [env.owner, client.decodeJid(client.user.id).split`@` [0], ...global.db.setting.owners].map(v => v + '@s.whatsapp.net').includes(m.sender)
-      const isPrem = (global.db.users.some(v => v.jid == m.sender) && global.db.users.find(v => v.jid == m.sender).premium)
+      const groupSet = global.db.groups.find(v => v.jid === m.chat)
+      const chats = global.db.chats.find(v => v.jid === m.chat)
+      const users = global.db.users.find(v => v.jid === m.sender)
+      const setting = global.db.setting
+      const isOwner = [client.decodeJid(client.user.id).replace(/@.+/, ''), env.owner, ...setting.owners].map(v => v + '@s.whatsapp.net').includes(m.sender)
       const isverified = (global.db.users.some(v => v.jid == m.sender) && global.db.users.find(v => v.jid == m.sender).verified)
+      const isPrem = ussrs && users.premium || isOwner
       const groupMetadata = m.isGroup ? await client.groupMetadata(m.chat) : {}
       const participants = m.isGroup ? groupMetadata.participants : [] || []
       const adminList = m.isGroup ? await client.groupAdmin(m.chat) : [] || []
       const isAdmin = m.isGroup ? adminList.includes(m.sender) : false
       const isBotAdmin = m.isGroup ? adminList.includes((client.user.id.split`:` [0]) + '@s.whatsapp.net') : false
       const blockList = typeof await (await client.fetchBlocklist()) != 'undefined' ? await (await client.fetchBlocklist()) : []
-      const groupSet = global.db.groups.find(v => v.jid == m.chat),
-         chats = global.db.chats.find(v => v.jid == m.chat),
-         users = global.db.users.find(v => v.jid == m.sender),
-         setting = global.db.setting
-      Logs(client, m, false) /* 1 = print all message, 0 = print only cmd message */
+      const isSpam = spam.detection(client, m, {
+         prefix, command, commands, users, cooldown,
+         show: 'all', // choose 'all' or 'command-only'
+         banned_times: users.ban_times
+      })
       if (!setting.online) client.sendPresenceUpdate('unavailable', m.chat)
       if (setting.online) {
          client.sendPresenceUpdate('available', m.chat)
@@ -71,8 +84,6 @@ module.exports = async (client, ctx) => {
          users.afk = -1
          users.afkReason = ''
       }
-      
-        
       cron.schedule('00 00 * * *', () => {
          setting.lastReset = new Date * 1
          global.db.users.filter(v => v.limit < env.limit && !v.premium).map(v => v.limit = env.limit)
@@ -92,14 +103,10 @@ module.exports = async (client, ctx) => {
             groupSet.member[m.sender].lastseen = now
          }
       }
-      const corePrefix = setting.prefix.concat([setting.onlyprefix])
-      const core = {
-         prefix: body ? Func.isEmojiPrefix(body) ? Func.getEmoji(body)[0] : body.charAt(0) : '',
-         command: body ? corePrefix.some(v => body.startsWith(v)) ? body.replace(corePrefix.find(v => body.startsWith(v)), '').split` `[0] : body.split` `[0] : '',
-         corePrefix
-      }
-      if (body && !setting.noprefix && !core.corePrefix.includes(core.prefix) && commands.includes(core.command) && !env.evaluate_chars.includes(core.command)) return client.reply(m.chat, `🚩 *Prefix needed!*, this bot uses prefix : *[ ${setting.multiprefix ? setting.prefix.join(', ') : setting.onlyprefix} ]*\n\n➠ ${setting.multiprefix ? setting.prefix[0] : setting.onlyprefix}${core.command} ${text || ''}`, m)
-      if (body && core.prefix != setting.onlyprefix && commands.includes(core.command) && !setting.multiprefix && !env.evaluate_chars.includes(core.command)) return client.reply(m.chat, `🚩 *Incorrect prefix!*, this bot uses prefix : *[ ${setting.onlyprefix} ]*\n\n➠ ${setting.onlyprefix + core.command} ${text || ''}`, m)
+      if (/(BANNED|NOTIFY|TEMPORARY)/.test(isSpam.state)) return client.reply(m.chat, Func.texted('bold', `🚩 ${isSpam.msg}`), m)
+      if (/HOLD/.test(isSpam.state)) return
+      if (body && !setting.self && !setting.noprefix && !core.corePrefix.includes(core.prefix) && commands.includes(core.command) && !env.evaluate_chars.includes(core.command)) return client.reply(m.chat, `🚩 *Prefix needed!*, this bot uses prefix : *[ ${setting.multiprefix ? setting.prefix.join(', ') : setting.onlyprefix} ]*\n\n➠ ${setting.multiprefix ? setting.prefix[0] : setting.onlyprefix}${core.command} ${text || ''}`, m)
+      if (body && !setting.self && core.prefix != setting.onlyprefix && commands.includes(core.command) && !setting.multiprefix && !env.evaluate_chars.includes(core.command)) return client.reply(m.chat, `🚩 *Incorrect prefix!*, this bot uses prefix : *[ ${setting.onlyprefix} ]*\n\n➠ ${setting.onlyprefix + core.command} ${text || ''}`, m)
       const matcher = Func.matcher(command, commands).filter(v => v.accuracy >= 60)
       if (prefix && !commands.includes(command) && matcher.length > 0 && !setting.self) {
          if (!m.isGroup || (m.isGroup && !groupSet.mute)) return client.reply(m.chat, `🚩 Command you are using is wrong, try the following recommendations :\n\n${matcher.map(v => '➠ *' + (prefix ? prefix : '') + v.string + '* (' + v.accuracy + '%)').join('\n')}`, m)
@@ -107,8 +114,6 @@ module.exports = async (client, ctx) => {
       if (body && prefix && commands.includes(command) || body && !prefix && commands.includes(command) && setting.noprefix || body && !prefix && commands.includes(command) && env.evaluate_chars.includes(command)) {
          if (setting.error.includes(command)) return client.reply(m.chat, Func.texted('bold', `🚩 Command _${(prefix ? prefix : '') + command}_ disabled.`), m)
          if (!m.isGroup && env.blocks.some(no => m.sender.startsWith(no))) return client.updateBlockStatus(m.sender, 'block')
-         if (cache.has(m.chat) && cache.get(m.chat) === 'on_hold' && !m.isBot) return
-         cache.set(m.chat, 'on_hold')
          if (commands.includes(command)) {
             users.hit += 1
             users.usebot = new Date() * 1
@@ -131,7 +136,7 @@ module.exports = async (client, ctx) => {
                }).then(() => chats.lastchat = new Date() * 1)
                continue
             }
-            if (!['me', 'owner', 'exec'].includes(name) && users && (users.banned || new Date - users.banTemp < env.timeout)) continue
+            if (!['me', 'owner', 'exec'].includes(name) && users && (users.banned || new Date - users.ban_temporary < env.timeout)) continue
             if (m.isGroup && !['activation', 'groupinfo'].includes(name) && groupSet.mute) continue
             if (cmd.cache && cmd.location) {
                let file = require.resolve(cmd.location)
@@ -152,13 +157,6 @@ module.exports = async (client, ctx) => {
                client.reply(m.chat, global.status.premium, m)
                continue
             }
-
-            if (cmd.verified && !isverified) {
-               client.reply(users.jid, `⚠️ To use bot you need to verify yourselft, to verify use /reg your email and enter the recived code.`, m, {
-               }).then(() => chats.lastchat = new Date() * 1)
-               continue
-            }
-
             if (cmd.limit && users.limit < 1) {
                client.reply(m.chat, `⚠️ You reached the limit and will be reset at 00.00\n\nTo get more limits upgrade to premium plans.`, m).then(() => users.premium = false)
                continue
@@ -171,6 +169,12 @@ module.exports = async (client, ctx) => {
                   client.reply(m.chat, Func.texted('bold', `⚠️ Your limit is not enough to use this feature.`), m)
                   continue
                }
+            }
+            //verification//
+            if (cmd.verified && !isverified) {
+               client.reply(users.jid, `⚠️ To use bot you need to verify yourselft, to verify use /reg your email and enter the recived code.`, m, {
+               }).then(() => chats.lastchat = new Date() * 1)
+               continue
             }
             if (cmd.group && !m.isGroup) {
                client.reply(m.chat, global.status.group, m)
@@ -191,14 +195,12 @@ module.exports = async (client, ctx) => {
          }
       } else {
          const is_events = Object.fromEntries(Object.entries(plugins).filter(([name, prop]) => !prop.run.usage))
-         if (cache.has(m.chat) && cache.get(m.chat) === 'on_hold' && !m.isBot) return
-         cache.set(m.sender, 'on_hold')
          for (let name in is_events) {
             let event = is_events[name].run
             if (m.fromMe || m.chat.endsWith('broadcast') || /pollUpdate/.test(m.mtype)) continue
             if (!m.isGroup && env.blocks.some(no => m.sender.startsWith(no))) return client.updateBlockStatus(m.sender, 'block')
             if (setting.self && !['menfess_ev', 'anti_link', 'anti_tagall', 'anti_virtex', 'filter'].includes(event.pluginName) && !isOwner && !m.fromMe) continue
-            if (!['anti_link', 'anti_tagall', 'anti_virtex', 'filter'].includes(name) && users && (users.banned || new Date - users.banTemp < env.timeout)) continue
+            if (!['anti_link', 'anti_tagall', 'anti_virtex', 'filter'].includes(name) && users && (users.banned || new Date - users.ban_temporary < env.timeout)) continue
             if (!['anti_link', 'anti_tagall', 'anti_virtex', 'filter'].includes(name) && groupSet && groupSet.mute) continue
             if (!m.isGroup && !['menfess_ev', 'chatbot', 'auto_download'].includes(name) && chats && !isPrem && !users.banned && new Date() * 1 - chats.lastchat < env.timeout) continue
             if (!m.isGroup && setting.groupmode && !['system_ev', 'menfess_ev', 'chatbot', 'auto_download'].includes(name) && !isPrem) return client.sendMessageModify(m.chat, `⚠️ Using bot in private chat only for premium user, want to upgrade to premium plan ? send *${prefixes[0]}premium* to see benefit and prices.`, m, {
