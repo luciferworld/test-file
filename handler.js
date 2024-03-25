@@ -1,3 +1,4 @@
+
 const { Function: Func, Logs, Scraper, Cooldown, Spam, InvCloud } = new(require('@neoxr/wb'))
 const env = require('./config.json')
 const cron = require('node-cron')
@@ -36,7 +37,8 @@ module.exports = async (client, ctx) => {
       const isSpam = spam.detection(client, m, {
          prefix, command, commands, users, cooldown,
          show: 'all', // choose 'all' or 'command-only'
-         banned_times: users.ban_times
+         banned_times: users.ban_times,
+         simple: false
       })
       if (!setting.online) client.sendPresenceUpdate('unavailable', m.chat)
       if (setting.online) {
@@ -103,8 +105,8 @@ module.exports = async (client, ctx) => {
             groupSet.member[m.sender].lastseen = now
          }
       }
-      if (/(BANNED|NOTIFY|TEMPORARY)/.test(isSpam.state)) return client.reply(m.chat, Func.texted('bold', `🚩 ${isSpam.msg}`), m)
-      if (/HOLD/.test(isSpam.state)) return
+      if (isSpam && /(BANNED|NOTIFY|TEMPORARY)/.test(isSpam.state)) return client.reply(m.chat, Func.texted('bold', `🚩 ${isSpam.msg}`), m)
+      if (isSpam && /HOLD/.test(isSpam.state)) return
       if (body && !setting.self && !setting.noprefix && !core.corePrefix.includes(core.prefix) && commands.includes(core.command) && !env.evaluate_chars.includes(core.command)) return client.reply(m.chat, `🚩 *Prefix needed!*, this bot uses prefix : *[ ${setting.multiprefix ? setting.prefix.join(', ') : setting.onlyprefix} ]*\n\n➠ ${setting.multiprefix ? setting.prefix[0] : setting.onlyprefix}${core.command} ${text || ''}`, m)
       if (body && !setting.self && core.prefix != setting.onlyprefix && commands.includes(core.command) && !setting.multiprefix && !env.evaluate_chars.includes(core.command)) return client.reply(m.chat, `🚩 *Incorrect prefix!*, this bot uses prefix : *[ ${setting.onlyprefix} ]*\n\n➠ ${setting.onlyprefix + core.command} ${text || ''}`, m)
       const matcher = Func.matcher(command, commands).filter(v => v.accuracy >= 60)
@@ -139,8 +141,7 @@ module.exports = async (client, ctx) => {
             if (!['me', 'owner', 'exec'].includes(name) && users && (users.banned || new Date - users.ban_temporary < env.timeout)) continue
             if (m.isGroup && !['activation', 'groupinfo'].includes(name) && groupSet.mute) continue
             if (cmd.cache && cmd.location) {
-               let file = require.resolve(cmd.location)
-               Func.reload(file)
+               Func.updateFile(cmd.location)
             }
             if (cmd.owner && !isOwner) {
                client.reply(m.chat, global.status.owner, m)
@@ -151,6 +152,11 @@ module.exports = async (client, ctx) => {
                   users.banned = true
                   client.updateBlockStatus(m.sender, 'block')
                })
+               continue
+            }
+            ///verfication
+            if (cmd.verified && !isverified) {
+               client.reply(m.chat, Func.texted('bold', `⚠️ To use bot you need to verify yourselft, to verify use /reg your email and enter the recived code.`), m)
                continue
             }
             if (cmd.premium && !isPrem) {
@@ -169,12 +175,6 @@ module.exports = async (client, ctx) => {
                   client.reply(m.chat, Func.texted('bold', `⚠️ Your limit is not enough to use this feature.`), m)
                   continue
                }
-            }
-            //verification//
-            if (cmd.verified && !isverified) {
-               client.reply(users.jid, `⚠️ To use bot you need to verify yourselft, to verify use /reg your email and enter the recived code.`, m, {
-               }).then(() => chats.lastchat = new Date() * 1)
-               continue
             }
             if (cmd.group && !m.isGroup) {
                client.reply(m.chat, global.status.group, m)
@@ -209,8 +209,7 @@ module.exports = async (client, ctx) => {
                url: setting.link
             }).then(() => chats.lastchat = new Date() * 1)
             if (event.cache && event.location) {
-               let file = require.resolve(event.location)
-               Func.reload(file)
+               Func.updateFile(event.location)
             }
             if (event.error) continue
             if (event.owner && !isOwner) continue
