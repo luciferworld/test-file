@@ -11,7 +11,7 @@ exports.run = {
             }
             client.sendReact(m.chat, '🕒', m.key);
 
-            const response = await axios.get(`https://api.lolhuman.xyz/api/image-creator/bing?apikey=GataDios&query=${text}`);
+            const response = await axios.get(`https://api.lolhuman.xyz/api/image-creator/bing?apikey=Ibrahim112&query=${text}`);
             const json = response.data;
 
 

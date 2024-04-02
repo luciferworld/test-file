@@ -8,7 +8,7 @@ exports.run = {
 
            client.sendReact(m.chat, '🕒', m.key);
 
-           let json = await Func.fetchJson(`https://api.lolhuman.xyz/api/apkdownloader?apikey=GataDios&package=${args[0]}`);
+           let json = await Func.fetchJson(`https://api.lolhuman.xyz/api/apkdownloader?apikey=Ibrahim112&package=${args[0]}`);
            
            if (!json.message) return client.reply(m.chat, global.status.fail, m)
          let teks = `乂  *A P K  D O W N L O A D E R *\n\n`

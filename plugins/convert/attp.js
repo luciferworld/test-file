@@ -17,7 +17,7 @@ exports.run = {
             if (!text) return client.reply(m.chat, Func.example(isPrefix, command, 'Ibrahim'), m)
             client.sendReact(m.chat, '🕒', m.key)
             const encodedText = encodeURIComponent(text)
-            const json = await Func.fetchBuffer(`https://api.lolhuman.xyz/api/attp?apikey=GataDios&text=${encodedText}`)
+            const json = await Func.fetchBuffer(`https://api.lolhuman.xyz/api/attp?apikey=Ibrahim112&text=${encodedText}`)
             client.sendSticker(m.chat, json, m, {
                packname: exif.sk_pack,
                author: exif.sk_author
@@ -27,7 +27,7 @@ exports.run = {
             if (!text) return client.reply(m.chat, Func.example(isPrefix, command, 'Ibrahim'), m)
             client.sendReact(m.chat, '🕒', m.key)
             const encodedText = encodeURIComponent(text)
-            const json = await Func.fetchBuffer(`https://api.lolhuman.xyz/api/attp2?apikey=GataDios&text=${encodedText}`)
+            const json = await Func.fetchBuffer(`https://api.lolhuman.xyz/api/attp2?apikey=Ibrahim112&text=${encodedText}`)
             client.sendSticker(m.chat, json, m, {
                packname: exif.sk_pack,
                author: exif.sk_author
