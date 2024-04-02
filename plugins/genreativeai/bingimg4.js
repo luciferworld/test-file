@@ -10,7 +10,7 @@ exports.run = {
         args,
         isPrefix,
         command,
-        Func,,,
+        Func
     }) => {
         const key = "Nayan" //dont change key
 
