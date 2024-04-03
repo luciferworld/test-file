@@ -79,6 +79,7 @@ exports.run = {
             // Send welcome message only if it's the user's first interaction
             if (!userConversations[userId] || userConversations[userId].conversations.length === 0) {
                 client.reply(m.chat, 'Welcome! You can start chatting. If you want to clear your conversation history, use /new.', m);
+                return;
             }
             
             // Handle other messages
