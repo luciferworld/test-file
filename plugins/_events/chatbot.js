@@ -1,3 +1,4 @@
+User
 const fs = require('fs');
 const { scheduleJob } = require('node-schedule');
 const { G4F } = require("g4f");
@@ -81,17 +82,16 @@ exports.run = {
                     userConversations[userId] = { conversations: [], messageCount: 0 };
                     client.reply(m.chat, 'Welcome! You can start chatting. If you want to clear your conversation history, use /new.', m);
                 }
-                {
-                    userConversations[userId].conversations.push({ role: "user", content: `${m.text}`, timestamp: new Date() });
-                    userConversations[userId].messageCount++;
-
-                    const options = {
-                        provider: g4f.providers.GPT,
-                        model: "gpt-4",
-                        debug: true,
-                        proxy: ""
-                    };
-                }
+                
+                userConversations[userId].conversations.push({ role: "user", content: `${m.text}`, timestamp: new Date() });
+                userConversations[userId].messageCount++;
+                
+                const options = {
+                    provider: g4f.providers.GPT,
+                    model: "gpt-4",
+                    debug: true,
+                    proxy: ""
+                };
 
                 const resp = await g4f.chatCompletion(userConversations[userId].conversations, options);
                 m.reply(resp);
