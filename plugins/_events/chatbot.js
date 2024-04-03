@@ -72,11 +72,7 @@ exports.run = {
                     userConversations[userId] = { conversations: [], messageCount: 0 };
                     client.reply(m.chat, 'Welcome! You can start chatting. If you want to clear your conversation history, use /new.', m);
                 }
-                if (command == '/new') {
-                    // Clear the user's conversation history
-                    userConversations[userId].conversations = [];
-                    return client.reply(m.chat, 'Your conversation history has been cleared.', m);
-                }
+                
                 userConversations[userId].conversations.push({ role: "user", content: `${m.text}`, timestamp: new Date() });
                 userConversations[userId].messageCount++;
                 
