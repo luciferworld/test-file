@@ -12,9 +12,11 @@ exports.run = {
        Func
     }) => {
        try {
+        if (!m.quoted && !text) return client.reply(m.chat, Func.example(isPrefix, command, 'what is java script'), m);
          
+        client.sendReact(m.chat, '🕒', m.key);
         const messages = [
-            { userId: `${m.jid}`, role: "user", content: "Hi, what's up?"}
+            { userId: `${m.jid}`, role: "user", content: `${text}`}
             // Add more messages here if needed
         ];
         const options = {
@@ -25,8 +27,8 @@ exports.run = {
         };
         
         (async() => {
-            const text = await g4f.chatCompletion(messages, options);    
-            console.log(text); 
+            const resp = await g4f.chatCompletion(messages, options);    
+            m.reply(resp); 
         })();
           
           
