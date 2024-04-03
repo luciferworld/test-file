@@ -20,7 +20,12 @@ if (!fs.existsSync(interactedUsersFile)) {
 // Function to load interacted users from file
 function loadInteractedUsers() {
     try {
-        return JSON.parse(fs.readFileSync(interactedUsersFile, 'utf8'));
+        const fileContent = fs.readFileSync(interactedUsersFile, 'utf8');
+        if (!fileContent.trim()) {
+            // File is empty, return an empty array
+            return [];
+        }
+        return JSON.parse(fileContent);
     } catch (err) {
         console.error('Error loading interacted users:', err);
         return [];
@@ -98,6 +103,9 @@ exports.run = {
                 // If the user is interacting for the first time, save the user ID
                 interactedUsers.push(userId);
                 saveInteractedUsers(interactedUsers);
+                
+                // Send welcome message for first-time interaction
+                client.reply(m.chat, 'Welcome! You can start chatting. If you want to clear your conversation history, use /new.', m);
             }
             
             const userConversations = loadUserConversations(userId);
@@ -117,6 +125,7 @@ exports.run = {
                     userConversations[userId] = { conversations: [], messageCount: 0 };
                 }
 
+                // Save user input to conversation history
                 userConversations[userId].conversations.push({ role: "user", content: `${m.text}`, timestamp: new Date() });
                 userConversations[userId].messageCount++;
                 
@@ -128,14 +137,23 @@ exports.run = {
                 };
 
                 const resp = await g4f.chatCompletion(userConversations[userId].conversations, options);
+                
+                // Log the response for debugging
+                console.log('Response:', resp);
+                
+                // Send bot's response
                 m.reply(resp);
 
+                // Save bot's response to conversation history
                 userConversations[userId].conversations.push({ role: "assistant", content: resp, timestamp: new Date() });
 
+                // Save conversation history to file
                 saveUserConversations(userId, userConversations);
             }
         } catch (e) {
             console.error('Error:', e);
+            // Log the error for debugging
+            client.reply(m.chat, 'An error occurred. Please try again later.', m);
         }
     },
     error: false,
