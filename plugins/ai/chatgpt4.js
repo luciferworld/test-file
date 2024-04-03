@@ -2,14 +2,14 @@ const { G4F } = require("g4f");
 const fs = require('fs');
 const g4f = new G4F();
 
-let conversation = [];
-
 // Load conversation data from file if available
+let userConversations = {};
+
 try {
-    conversation = JSON.parse(fs.readFileSync('conversation.json', 'utf8'));
-    console.log('Conversation data loaded.');
+    userConversations = JSON.parse(fs.readFileSync('user_conversations.json', 'utf8'));
+    console.log('User conversations loaded.');
 } catch (err) {
-    console.error('Error loading conversation data:', err);
+    console.error('Error loading user conversations:', err);
 }
 
 exports.run = {
@@ -24,23 +24,30 @@ exports.run = {
        Func
     }) => {
        try {
+        const userId = `${m.jid}`;
+
+        // Initialize user conversation if not exists
+        if (!userConversations[userId]) {
+            userConversations[userId] = [];
+        }
+
         // Check if the command is 'test forget'
         if (command == 'test forget') {
-            // Clear the conversation array and remove saved file
-            conversation = [];
-            fs.unlinkSync('conversation.json');
-            return client.reply(m.chat, 'Conversation history has been cleared.', m);
+            // Clear the user's conversation history and remove saved file
+            userConversations[userId] = [];
+            fs.writeFileSync(`user_conversation_${userId}.json`, '[]', 'utf8');
+            return client.reply(m.chat, 'Your conversation history has been cleared.', m);
         }
 
         if (!m.quoted && !text) return client.reply(m.chat, Func.example(isPrefix, command, 'what is java script'), m);
          
         client.sendReact(m.chat, '🕒', m.key);
 
-        // If there's text, add user's message to the conversation array
+        // If there's text, add user's message to the user's conversation array
         if (text) {
-            conversation.push({ userId: `${m.jid}`, role: "user", content: `${text}` });
-            // Save conversation data to file
-            fs.writeFileSync('conversation.json', JSON.stringify(conversation), 'utf8');
+            userConversations[userId].push({ role: "user", content: `${text}` });
+            // Save user's conversation data to file
+            fs.writeFileSync(`user_conversation_${userId}.json`, JSON.stringify(userConversations[userId]), 'utf8');
         }
 
         const options = {
@@ -51,14 +58,14 @@ exports.run = {
         };
         
         (async() => {
-            // Use the conversation array as input for chatCompletion method
-            const resp = await g4f.chatCompletion(conversation, options);    
+            // Use the user's conversation array as input for chatCompletion method
+            const resp = await g4f.chatCompletion(userConversations[userId], options);    
             m.reply(resp); 
 
-            // Add the AI response to the conversation array
-            conversation.push({ role: "assistant", content: resp });
-            // Save conversation data to file
-            fs.writeFileSync('conversation.json', JSON.stringify(conversation), 'utf8');
+            // Add the AI response to the user's conversation array
+            userConversations[userId].push({ role: "assistant", content: resp });
+            // Save user's conversation data to file
+            fs.writeFileSync(`user_conversation_${userId}.json`, JSON.stringify(userConversations[userId]), 'utf8');
         })();
           
        } catch (e) {
