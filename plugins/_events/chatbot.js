@@ -33,8 +33,48 @@ exports.run = {
 
             // Process text message
             else if (m.text) {
-                // Process the text message here
-                // For example, you can reply with a predefined message
+
+                if (!userConversations[userId]) {
+                    userConversations[userId] = { conversations: [], messageCount: 0 };
+                    // Inform user about starting the bot
+                    client.reply(m.chat, 'Welcome! You can start chatting. If you want to clear your conversation history, use /new.', m);
+                }
+                if (command == 'new') {
+                    // Clear the user's conversation history
+                    userConversations[userId].conversations = [];
+                    return client.reply(m.chat, 'Your conversation history has been cleared.', m);
+                }
+                if (text) {
+                    userConversations[userId].conversations.push({ role: "user", content: `${m.text}`, timestamp: new Date() });
+                    userConversations[userId].messageCount++; // Increment message count
+                }
+
+                const options = {
+                    provider: g4f.providers.GPT,
+                    model: "gpt-4",
+                    debug: true,
+                    proxy: ""
+                };
+
+                (async () => {
+                    // Use the user's conversation array as input for chatCompletion method
+                    const resp = await g4f.chatCompletion(userConversations[userId].conversations, options);
+                    m.reply(resp);
+
+                    // Add the AI response to the user's conversation array
+                    userConversations[userId].conversations.push({ role: "assistant", content: resp, timestamp: new Date() });
+
+                    // Save all user data to file
+                    fs.writeFileSync(userConversationsFile, JSON.stringify(userConversations), 'utf8');
+
+                    // Check if user has sent 8 messages
+                    if (userConversations[userId].messageCount >= 8) {
+                        // Reset message count
+                        userConversations[userId].messageCount = 0;
+                        // Inform user about starting a new chat
+                        client.reply(m.chat, 'If you want to start a new chat, use /new.', m);
+                    }
+                })();
                 client.reply(m.chat, 'Thank you for your message!', m);
             }
         } catch (e) {
