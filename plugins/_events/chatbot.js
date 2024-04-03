@@ -61,7 +61,7 @@ function cleanupMessages() {
 }
 
 exports.run = {
-    async: async (m, { client, setting, Scraper, Func }) => {
+    async: async (m, { client, setting, Scraper, Func, command }) => {
         try {
             if ((m.quoted && m.quoted.mtype === 'imageMessage') || (m.mtype === 'imageMessage' && m.text)) {
                 // Code for processing image messages
