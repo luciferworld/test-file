@@ -2,14 +2,14 @@ const { G4F } = require("g4f");
 const fs = require('fs');
 const g4f = new G4F();
 
-// Load conversation data from file if available
-let userConversations = {};
+// Load all user data from file if available
+let allUserData = {};
 
 try {
-    userConversations = JSON.parse(fs.readFileSync('user_conversations.json', 'utf8'));
-    console.log('User conversations loaded.');
+    allUserData = JSON.parse(fs.readFileSync('all_user_data.json', 'utf8'));
+    console.log('All user data loaded.');
 } catch (err) {
-    console.error('Error loading user conversations:', err);
+    console.error('Error loading all user data:', err);
 }
 
 exports.run = {
@@ -26,16 +26,15 @@ exports.run = {
        try {
         const userId = `${m.chat}`;
 
-        // Initialize user conversation if not exists
-        if (!userConversations[userId]) {
-            userConversations[userId] = [];
+        // Initialize user data if not exists
+        if (!allUserData[userId]) {
+            allUserData[userId] = { conversations: [] };
         }
 
         // Check if the command is 'test forget'
         if (command == 'test forget') {
-            // Clear the user's conversation history and remove saved file
-            userConversations[userId] = [];
-            fs.writeFileSync(`user_conversation_${userId}.json`, '[]', 'utf8');
+            // Clear the user's conversation history
+            allUserData[userId].conversations = [];
             return client.reply(m.chat, 'Your conversation history has been cleared.', m);
         }
 
@@ -45,9 +44,7 @@ exports.run = {
 
         // If there's text, add user's message to the user's conversation array
         if (text) {
-            userConversations[userId].push({ role: "user", content: `${text}` });
-            // Save user's conversation data to file
-            fs.writeFileSync(`user_conversation_${userId}.json`, JSON.stringify(userConversations[userId]), 'utf8');
+            allUserData[userId].conversations.push({ role: "user", content: `${text}` });
         }
 
         const options = {
@@ -59,14 +56,15 @@ exports.run = {
         
         (async() => {
             // Use the user's conversation array as input for chatCompletion method
-            const resp = await g4f.chatCompletion(userConversations[userId], options);    
+            const resp = await g4f.chatCompletion(allUserData[userId].conversations, options);    
             m.reply(resp); 
 
             // Add the AI response to the user's conversation array
-            userConversations[userId].push({ role: "assistant", content: resp });
-            // Save user's conversation data to file
-            fs.writeFileSync(`user_conversation_${userId}.json`, JSON.stringify(userConversations[userId]), 'utf8');
+            allUserData[userId].conversations.push({ role: "assistant", content: resp });
         })();
+
+        // Save all user data to file
+        fs.writeFileSync(`all_user_data.json`, JSON.stringify(allUserData), 'utf8');
           
        } catch (e) {
           client.reply(m.chat, Func.jsonFormat(e), m);
