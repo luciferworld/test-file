@@ -81,43 +81,17 @@ exports.run = {
                     userConversations[userId] = { conversations: [], messageCount: 0 };
                     client.reply(m.chat, 'Welcome! You can start chatting. If you want to clear your conversation history, use /new.', m);
                 }
-                if (m.text === '/new') {
-                    console.log('Received /new command for user:', userId);
-                    userConversations[userId].conversations = [];
-                    console.log('Conversation history cleared for user:', userId);
-                    console.log('Updated userConversations:', userConversations);
-                    fs.writeFileSync(userConversationsFile, JSON.stringify(userConversations), 'utf8');
-                    console.log('user_conversations.json updated.');
-                
-                    // Clear user conversation from logs file as well
-                    let userLogs = [];
-                    try {
-                        userLogs = JSON.parse(fs.readFileSync(userLogsFile, 'utf8'));
-                    } catch (err) {
-                        console.error('Error loading user logs:', err);
-                    }
-                
-                    // Remove current user ID from logs
-                    const userIndex = userLogs.indexOf(userId);
-                    if (userIndex !== -1) {
-                        userLogs.splice(userIndex, 1);
-                        fs.writeFileSync(userLogsFile, JSON.stringify(userLogs), 'utf8');
-                        console.log('User removed from logs:', userId);
-                    } else {
-                        console.log('User not found in logs:', userId);
-                    }
-                
-                    return client.reply(m.chat, 'Your conversation history has been cleared.', m);
+                {
+                    userConversations[userId].conversations.push({ role: "user", content: `${m.text}`, timestamp: new Date() });
+                    userConversations[userId].messageCount++;
+
+                    const options = {
+                        provider: g4f.providers.GPT,
+                        model: "gpt-4",
+                        debug: true,
+                        proxy: ""
+                    };
                 }
-                userConversations[userId].conversations.push({ role: "user", content: `${m.text}`, timestamp: new Date() });
-                userConversations[userId].messageCount++;
-                
-                const options = {
-                    provider: g4f.providers.GPT,
-                    model: "gpt-4",
-                    debug: true,
-                    proxy: ""
-                };
 
                 const resp = await g4f.chatCompletion(userConversations[userId].conversations, options);
                 m.reply(resp);
