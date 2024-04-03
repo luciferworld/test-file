@@ -5,10 +5,36 @@ const { G4F } = require("g4f");
 const g4f = new G4F();
 
 const logsFolderPath = './logs/';
+const interactedUsersFile = 'interacted_users.json'; // File to store user IDs
 
 // Ensure logs folder exists
 if (!fs.existsSync(logsFolderPath)){
     fs.mkdirSync(logsFolderPath);
+}
+
+// Ensure interacted users file exists
+if (!fs.existsSync(interactedUsersFile)) {
+    fs.writeFileSync(interactedUsersFile, '[]', 'utf8');
+}
+
+// Function to load interacted users from file
+function loadInteractedUsers() {
+    try {
+        return JSON.parse(fs.readFileSync(interactedUsersFile, 'utf8'));
+    } catch (err) {
+        console.error('Error loading interacted users:', err);
+        return [];
+    }
+}
+
+// Function to save interacted users to file
+function saveInteractedUsers(interactedUsers) {
+    try {
+        fs.writeFileSync(interactedUsersFile, JSON.stringify(interactedUsers), 'utf8');
+        console.log('Interacted users saved successfully.');
+    } catch (err) {
+        console.error('Error saving interacted users:', err);
+    }
 }
 
 // Function to load user conversations from file
@@ -65,6 +91,15 @@ exports.run = {
     async: async (m, { client }) => {
         try {
             const userId = `${m.chat}`;
+            const interactedUsers = loadInteractedUsers();
+            
+            // Check if the user has interacted with the bot before
+            if (!interactedUsers.includes(userId)) {
+                // If the user is interacting for the first time, save the user ID
+                interactedUsers.push(userId);
+                saveInteractedUsers(interactedUsers);
+            }
+            
             const userConversations = loadUserConversations(userId);
             
             // Handle "/new" command
@@ -74,12 +109,6 @@ exports.run = {
                 } else {
                     return client.reply(m.chat, 'No conversation history to clear.', m);
                 }
-            }
-            
-            // Send welcome message only if it's the user's first interaction
-            if (!userConversations[userId] || userConversations[userId].conversations.length === 0) {
-                client.reply(m.chat, 'Welcome! You can start chatting. If you want to clear your conversation history, use /new.', m);
-                return;
             }
             
             // Handle other messages
