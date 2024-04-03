@@ -39,10 +39,19 @@ function saveUserConversations(userId, userConversations) {
 
 // Function to clear conversation history for a user
 function clearUserConversationHistory(userId) {
-    const userConversations = loadUserConversations(userId);
-    userConversations.conversations = [];
-    saveUserConversations(userId, userConversations);
-    return true;
+    const userLogFilePath = `${logsFolderPath}${userId}.json`;
+    try {
+        if (fs.existsSync(userLogFilePath)) {
+            fs.unlinkSync(userLogFilePath);
+            console.log(`Log file deleted for user ${userId}.`);
+            return true;
+        }
+        console.log(`No log file found for user ${userId}.`);
+        return false;
+    } catch (err) {
+        console.error(`Error deleting log file for ${userId}:`, err);
+        return false;
+    }
 }
 
 // Schedule job to run every 6 hours for message cleanup
