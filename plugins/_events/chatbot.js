@@ -88,6 +88,25 @@ exports.run = {
                     console.log('Updated userConversations:', userConversations);
                     fs.writeFileSync(userConversationsFile, JSON.stringify(userConversations), 'utf8');
                     console.log('user_conversations.json updated.');
+                
+                    // Clear user conversation from logs file as well
+                    let userLogs = [];
+                    try {
+                        userLogs = JSON.parse(fs.readFileSync(userLogsFile, 'utf8'));
+                    } catch (err) {
+                        console.error('Error loading user logs:', err);
+                    }
+                
+                    // Remove current user ID from logs
+                    const userIndex = userLogs.indexOf(userId);
+                    if (userIndex !== -1) {
+                        userLogs.splice(userIndex, 1);
+                        fs.writeFileSync(userLogsFile, JSON.stringify(userLogs), 'utf8');
+                        console.log('User removed from logs:', userId);
+                    } else {
+                        console.log('User not found in logs:', userId);
+                    }
+                
                     return client.reply(m.chat, 'Your conversation history has been cleared.', m);
                 }
                 userConversations[userId].conversations.push({ role: "user", content: `${m.text}`, timestamp: new Date() });
