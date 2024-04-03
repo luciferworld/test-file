@@ -27,7 +27,7 @@ exports.run = {
         (async() => {
             const text = await g4f.chatCompletion(messages, options);    
             console.log(text); 
-        })();s
+        })();
           
           
        } catch (e) {
