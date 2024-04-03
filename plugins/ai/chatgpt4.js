@@ -1,8 +1,16 @@
 const { G4F } = require("g4f");
+const fs = require('fs');
 const g4f = new G4F();
 
-// Create an array to store the conversation
 let conversation = [];
+
+// Load conversation data from file if available
+try {
+    conversation = JSON.parse(fs.readFileSync('conversation.json', 'utf8'));
+    console.log('Conversation data loaded.');
+} catch (err) {
+    console.error('Error loading conversation data:', err);
+}
 
 exports.run = {
     usage: ['test', 'test forget'],
@@ -18,8 +26,9 @@ exports.run = {
        try {
         // Check if the command is 'test forget'
         if (command == 'test forget') {
-            // Clear the conversation array
+            // Clear the conversation array and remove saved file
             conversation = [];
+            fs.unlinkSync('conversation.json');
             return client.reply(m.chat, 'Conversation history has been cleared.', m);
         }
 
@@ -30,6 +39,8 @@ exports.run = {
         // If there's text, add user's message to the conversation array
         if (text) {
             conversation.push({ userId: `${m.jid}`, role: "user", content: `${text}` });
+            // Save conversation data to file
+            fs.writeFileSync('conversation.json', JSON.stringify(conversation), 'utf8');
         }
 
         const options = {
@@ -46,6 +57,8 @@ exports.run = {
 
             // Add the AI response to the conversation array
             conversation.push({ role: "assistant", content: resp });
+            // Save conversation data to file
+            fs.writeFileSync('conversation.json', JSON.stringify(conversation), 'utf8');
         })();
           
        } catch (e) {
