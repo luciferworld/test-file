@@ -5,7 +5,7 @@ const g4f = new G4F();
 let conversation = [];
 
 exports.run = {
-    usage: ['test'],
+    usage: ['test', 'test forget'],
     use: 'prompt',
     category: 'ai',
     async: async (m, {
@@ -16,6 +16,13 @@ exports.run = {
        Func
     }) => {
        try {
+        // Check if the command is 'test forget'
+        if (command == 'test forget') {
+            // Clear the conversation array
+            conversation = [];
+            return client.reply(m.chat, 'Conversation history has been cleared.', m);
+        }
+
         if (!m.quoted && !text) return client.reply(m.chat, Func.example(isPrefix, command, 'what is java script'), m);
          
         client.sendReact(m.chat, '🕒', m.key);
