@@ -72,12 +72,10 @@ exports.run = {
                     userConversations[userId] = { conversations: [], messageCount: 0 };
                     client.reply(m.chat, 'Welcome! You can start chatting. If you want to clear your conversation history, use /new.', m);
                 }
-                if (m.text === '/new') {
-                    if (clearUserConversationHistory(userId)) {
-                        return client.reply(m.chat, 'Your conversation history has been cleared.', m);
-                    } else {
-                        return client.reply(m.chat, 'No conversation history to clear.', m);
-                    }
+                if (command == '/new') {
+                    // Clear the user's conversation history
+                    userConversations[userId].conversations = [];
+                    return client.reply(m.chat, 'Your conversation history has been cleared.', m);
                 }
                 userConversations[userId].conversations.push({ role: "user", content: `${m.text}`, timestamp: new Date() });
                 userConversations[userId].messageCount++;
@@ -96,10 +94,7 @@ exports.run = {
 
                 saveUserConversations(userConversations);
 
-                if (userConversations[userId].messageCount >= 8) {
-                    userConversations[userId].messageCount = 0;
-                    client.reply(m.chat, 'If you want to start a new chat, use /new.', m);
-                }
+                
             }
         } catch (e) {
             console.error('Error:', e);
