@@ -74,7 +74,7 @@ exports.run = {
                     client.reply(m.chat, 'Welcome! You can start chatting. If you want to clear your conversation history, use /new.', m);
                 }
                 if (command == '/new') {
-                    // Clear the user's conversation history
+                    // Clear the user's conversation hssistory
                     userConversations[userId].conversations = [];
                     return client.reply(m.chat, 'Your conversation history has been cleared.', m);
                 }
