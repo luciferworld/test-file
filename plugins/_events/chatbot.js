@@ -82,7 +82,12 @@ exports.run = {
                     client.reply(m.chat, 'Welcome! You can start chatting. If you want to clear your conversation history, use /new.', m);
                 }
                 if (m.text === '/new') {
+                    console.log('Received /new command for user:', userId);
                     userConversations[userId].conversations = [];
+                    console.log('Conversation history cleared for user:', userId);
+                    console.log('Updated userConversations:', userConversations);
+                    fs.writeFileSync(userConversationsFile, JSON.stringify(userConversations), 'utf8');
+                    console.log('user_conversations.json updated.');
                     return client.reply(m.chat, 'Your conversation history has been cleared.', m);
                 }
                 userConversations[userId].conversations.push({ role: "user", content: `${m.text}`, timestamp: new Date() });
