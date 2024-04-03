@@ -1,4 +1,3 @@
-User
 const fs = require('fs');
 const { scheduleJob } = require('node-schedule');
 const { G4F } = require("g4f");
