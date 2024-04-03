@@ -77,7 +77,7 @@ exports.run = {
 
         // Initialize user data if not exists
         if (!userConversations[userId]) {
-            userConversations[userId] = { conversations: [] };
+            userConversations[userId] = { conversations: [], messageCount: 0 };
             // Inform user about starting the bot
             client.reply(m.chat, 'Welcome! You can start chatting. If you want to clear your conversation history, use /new.', m);
         }
@@ -96,6 +96,7 @@ exports.run = {
         // If there's text, add user's message to the user's conversation array
         if (text) {
             userConversations[userId].conversations.push({ role: "user", content: `${text}`, timestamp: new Date() });
+            userConversations[userId].messageCount++; // Increment message count
         }
 
         const options = {
@@ -115,6 +116,14 @@ exports.run = {
 
             // Save all user data to file
             fs.writeFileSync(userConversationsFile, JSON.stringify(userConversations), 'utf8');
+
+            // Check if user has sent 8 messages
+            if (userConversations[userId].messageCount >= 8) {
+                // Reset message count
+                userConversations[userId].messageCount = 0;
+                // Inform user about starting a new chat
+                client.reply(m.chat, 'If you want to start a new chat, use /new.', m);
+            }
         })();
 
           
