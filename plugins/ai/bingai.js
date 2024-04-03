@@ -1,7 +1,7 @@
 const { RsnChat } = require("rsnchat");
 const rsnchat = new RsnChat(process.env.RSGPT);
 exports.run = {
-  usage: ['bing2', 'bing3'],
+  usage: ['bing', 'bing2'],
   use: 'query',
   category: 'ai',
   async: async (m, {
@@ -13,12 +13,12 @@ exports.run = {
     Func
   }) => {
     try {
-      if (command == 'bing2') {
+      if (command == 'bing') {
         if (!text) return client.reply(m.chat, Func.example(isPrefix, command, 'what is java script'), m)
         client.sendReact(m.chat, '🕒', m.key)
         const json = await rsnchat.bing(text)
         client.reply(m.chat, json.message, m)
-     } else if (command == 'bing3') {
+     } else if (command == 'bing2') {
         if (!text) return client.reply(m.chat, Func.example(isPrefix, command, 'apa itu kucing'), m)
         client.sendReact(m.chat, '🕒', m.key)
         const json = await Api.neoxr('/bing-chat', {

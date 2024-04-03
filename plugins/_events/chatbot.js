@@ -32,7 +32,11 @@ exports.run = {
             }
 
             // Process text message
-           
+            else if (m.text) {
+                // Process the text message here
+                // For example, you can reply with a predefined message
+                client.reply(m.chat, 'Thank you for your message!', m);
+            }
         } catch (e) {
             console.error('Error:', e);
         }
@@ -40,5 +44,6 @@ exports.run = {
     error: false,
     private: true,
     cache: true,
+    premium: true,
     location: __filename
 };
