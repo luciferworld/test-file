@@ -26,7 +26,7 @@ module.exports = async (client, ctx) => {
       const users = global.db.users.find(v => v.jid === m.sender)
       const setting = global.db.setting
       const isOwner = [client.decodeJid(client.user.id).replace(/@.+/, ''), env.owner, ...setting.owners].map(v => v + '@s.whatsapp.net').includes(m.sender)
-      const isverified = (global.db.users.some(v => v.jid == m.sender) && global.db.users.find(v => v.jid == m.sender).verified)
+      //const isverified = (global.db.users.some(v => v.jid == m.sender) && global.db.users.find(v => v.jid == m.sender).verified)
       const isPrem = users && users.premium || isOwner
       const groupMetadata = m.isGroup ? await client.groupMetadata(m.chat) : {}
       const participants = m.isGroup ? groupMetadata.participants : [] || []
@@ -155,10 +155,10 @@ module.exports = async (client, ctx) => {
                continue
             }
             ///verfication
-            if (cmd.verified && !isverified) {
-               client.reply(m.chat, Func.texted('bold', `⚠️ To use bot you need to verify yourselft, to verify use /reg your email and enter the recived code.`), m)
-               continue
-            }
+           // if (cmd.verified && !isverified) {
+              // client.reply(m.chat, Func.texted('bold', `⚠️ To use bot you need to verify yourselft, to verify use /reg your email and enter the recived code.`), m)
+              // continue
+           // }
             if (cmd.premium && !isPrem) {
                client.reply(m.chat, global.status.premium, m)
                continue
