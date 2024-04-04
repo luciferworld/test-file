@@ -2,7 +2,7 @@ const { bing } = require("nayan-bing-api");
 const request = require('request')
 
 exports.run = {
-    usage: ['bingimg3'],
+    usage: ['bingimg'],
     use: 'query',
     category: 'generativeai',
     async: async (m, { client, text, Func }) => {
