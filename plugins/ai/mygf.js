@@ -4,7 +4,13 @@ exports.run = {
     usage: ['mygf'],
     use: 'query ',
     category: 'ai',
-    run: async function(m, { client, text, isPrefix, command }) {
+    async: async (m, {
+        client,
+        text,
+        isPrefix,
+        command,
+        Func
+     }) => {
         try {
             const bot = new ChatBot(`${global.bing}`);
             if (!text) return client.reply(m.chat, 'Usage: !mygf <query>', m); // Provide proper usage
