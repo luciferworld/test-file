@@ -1,4 +1,4 @@
-const ChatBot  = import("sydney-ai");
+const { ChatBot } = require("sydney-ai")
 const bot = new ChatBot(process.env.TOKEN);
 
 exports.run = {
