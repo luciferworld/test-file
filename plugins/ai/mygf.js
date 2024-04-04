@@ -1,4 +1,4 @@
-const botModule = import("sydney-ai");
+const ChatBot  = import("sydney-ai");
 
 exports.run = {
     usage: ['mygf'],
@@ -6,7 +6,7 @@ exports.run = {
     category: 'ai',
     run: async function(m, { client, text, isPrefix, command }) {
         try {
-            const bot = await botModule;
+            const bot = new ChatBot(`${global.bing}`);
             if (!text) return client.reply(m.chat, 'Usage: !mygf <query>', m); // Provide proper usage
             client.sendReact(m.chat, '🕒', m.key); // Assuming sendReact sends a reaction to the message
             let response = await bot.ask(text);
