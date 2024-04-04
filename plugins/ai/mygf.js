@@ -1,4 +1,4 @@
-import ChatBot from "sydney-ai";
+const  ChatBot = require("sydney-ai");
 const bot = new ChatBot(`${global.bing}`);
 xports.run = {
     usage: ['mygf'],
