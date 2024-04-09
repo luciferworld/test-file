@@ -1,4 +1,4 @@
-const gplay = require('google-play-scraper');
+const gplay = require('@capgo/google-play-scraper');
 exports.run = {
   usage: ['apksearch'],
   use: 'query',
