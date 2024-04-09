@@ -12,15 +12,15 @@ exports.run = {
       
       const response = await gplay.search({
         term: text,
-        num: 2
+        num: 1
       });
 
       let combinedCaption = '乂  *Y T  S E R A C H*\n\n';
-      response.forEach((v, index) => {
-        combinedCaption += `    ◦  *Name*: ${v.title}\n`;
-        combinedCaption += `    ◦  *AppID*: ${v.appId}\n`;
-        combinedCaption += `    ◦  *URL*: ${v.url}\n\n`;
-      });
+      
+        combinedCaption += `    ◦  *Name*: ${response.title}\n`;
+        combinedCaption += `    ◦  *AppID*: ${response.appId}\n`;
+        combinedCaption += `    ◦  *URL*: ${response.url}\n\n`;
+      
 
       await m.reply(combinedCaption); // Await the reply to ensure it's sent after processing
 
