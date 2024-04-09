@@ -1,4 +1,4 @@
-var gplay = require('google-play-scraper');
+var gplay = require('custom-google-play-scraper');
 
 
 exports.run = {
