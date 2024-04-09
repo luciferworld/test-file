@@ -69,7 +69,7 @@ exports.run = {
                     return client.reply(m.chat, Func.texted('bold', `❌ Error sending email.`), m);
                 }
                 console.log('Email sent:', info.response);
-                client.reply(m.chat, Func.texted('bold', `✅ Verification code sent to your email. Please check your inbox.`), m);
+                client.reply(m.chat, Func.texted('bold', `✅ Verification code sent to your email. Please check your inbox/spam folder. And send code to bot`), m);
             });
         } catch (e) {
             console.error(e);
