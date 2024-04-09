@@ -9,7 +9,7 @@ exports.run = {
 
             client.sendReact(m.chat, '🕒', m.key);
 
-            let data = await download(text);
+            let data = await download(`${text}`);
             let teks = `乂  *A P K  D O W N L O A D E R *\n\n`
             teks += '	◦  *Name* : ' + data.name + '\n'
             teks += '	◦  *Upated on*: ' + data.lastup + '\n'
