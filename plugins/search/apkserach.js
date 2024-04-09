@@ -1,4 +1,6 @@
-const gplay = require('@capgo/google-play-scraper');
+var gplay = require('google-play-scraper');
+
+
 exports.run = {
   usage: ['apksearch'],
   use: 'query',
@@ -15,10 +17,8 @@ exports.run = {
          
           
           
-        gplay.search({
-          term: "facebook",
-          num: 2
-        }).then(console.log, console.log);
+        gplay.app({appId: 'com.google.android.apps.translate'})
+  .then(console.log, console.log);
       } catch (e) {
           return client.reply(m.chat, global.status.error, m)
       }
