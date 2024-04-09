@@ -12,7 +12,8 @@ exports.run = {
       
       const response = await gplay.search({
         term: text,
-        num: 2
+        num: 2,
+        throttle: 10
       });
 
       let combinedCaption = '乂  *P L A Y S T O R E  S E R A C H*\n\n';
