@@ -16,7 +16,7 @@ exports.run = {
             teks += '	◦  *Size* : ' + data.size + '\n'
             teks += global.footer
             client.sendFile(m.chat, data.icon, '', teks, m).then(() => {
-                client.sendFile(m.chat, data.result.dllink, data.name + '.apk', data.name, m)
+                client.sendFile(m.chat, data.dllink, data.name + '.apk', data.name, m)
             })
         } catch (e) {
             console.error(e);
