@@ -16,7 +16,7 @@ exports.run = {
         throttle: 10
       });
 
-      let combinedCaption = '乂  *P L A Y S T O R E  S E R A C H*\n\n to download app use /apkdl appID given below';
+      let combinedCaption = '乂  *P L A Y S T O R E  S E R A C H*\n\n to download app use /apkdl url given below';
       response.forEach((v, index) => {
         combinedCaption += `    ◦  *Name*: ${v.title}\n`;
         combinedCaption += `    ◦  *AppID*: ${v.appId}\n`;
