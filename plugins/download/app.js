@@ -1,21 +1,15 @@
 const {download} = require('aptoide-scraper')
-const gplay = require('custom-google-play-scraper');
 exports.run = {
     usage: ['app'],
-    use: 'Name',
+    use: 'app id',
     category: 'downloader',
-    async: async (m, { client, args, text, isPrefix, command, Func }) => {
+    async: async (m, { client, args, isPrefix, command, Func }) => {
         try {
             if (!args || !args[0]) return client.reply(m.chat, Func.example(isPrefix, command, 'your app id(com.whatsapp)'), m);
 
             client.sendReact(m.chat, '🕒', m.key);
-            const response = await gplay.search({
-                term: text,
-                num: 2,
-                throttle: 10
-              });
 
-            let data = await download(response[0].appId);
+            let data = await download(text);
             let teks = `乂  *A P K  D O W N L O A D E R *\n\n`
             teks += '	◦  *Name* : ' + data.name + '\n'
             teks += '	◦  *Upated on*: ' + data.lastup + '\n'
