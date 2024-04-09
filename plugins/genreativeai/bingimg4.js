@@ -1,5 +1,4 @@
 const { bing } = require("nayan-bing-api");
-const request = require('request')
 
 exports.run = {
     usage: ['bingimg'],
@@ -12,7 +11,6 @@ exports.run = {
         m.reply('Sending images, it will take some time');
         
         const key = "Nayan"; // Don't change key
-       
         const cookie = `${global.bing}`; // Paste your Bing cookie here
         const query = text;
         
@@ -27,7 +25,8 @@ exports.run = {
             }
             
             for (let i = 0; i < data.result.length; i++) {
-                client.sendFile(m.chat, data.result[i], 'image.jpg', '', m);
+                const caption = `\`\`\`Image:\`\`\` ${i + 1}/${data.result.length}`;
+                client.sendFile(m.chat, data.result[i], 'image.jpg', caption, m);
                 await Func.delay(1500); // Delay between sending images
             }
         } catch (error) {
@@ -44,4 +43,3 @@ exports.run = {
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
-
