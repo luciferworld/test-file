@@ -14,9 +14,9 @@ exports.run = {
       try {
          
           
-          if (!text) return client.reply(m.chat, Func.example(isPrefix, command, 'Facebook'), m)
+          
           playstore
-  .search(text)
+  .search('facebook')
   .then((res) => {
     console.log(res);
   })
