@@ -15,10 +15,14 @@ exports.run = {
   }) => {
       try {
          
+        if (!text) {
+          return client.reply(m.chat, Func.example(isPrefix, command, 'facebook'), m);
+      }
           
-          
-        gplay.app({appId: 'com.google.android.apps.translate'})
-  .then(console.log, console.log);
+        gplay.search({
+          term: `${text}`,
+          num: 2
+        }).then(console.log, console.log);
       } catch (e) {
           return client.reply(m.chat, global.status.error, m)
       }
