@@ -3,7 +3,7 @@ exports.run = {
     usage: ['app'],
     use: 'app id',
     category: 'downloader',
-    async: async (m, { client, args, isPrefix, command, Func }) => {
+    async: async (m, { client, args, text, isPrefix, command, Func }) => {
         try {
             if (!args || !args[0]) return client.reply(m.chat, Func.example(isPrefix, command, 'your app id(com.whatsapp)'), m);
 
