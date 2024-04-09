@@ -15,7 +15,7 @@ exports.run = {
         num: 2
       });
 
-      let combinedCaption = '乂  *Y T  S E R A C H*\n\n';
+      let combinedCaption = '乂  *P L A Y S T O R E  S E R A C H*\n\n';
       response.forEach((v, index) => {
         combinedCaption += `    ◦  *Name*: ${v.title}\n`;
         combinedCaption += `    ◦  *AppID*: ${v.appId}\n`;
