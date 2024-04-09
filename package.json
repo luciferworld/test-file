@@ -43,7 +43,7 @@
       "nayan-bing-api": "1.0.1",
       "custom-google-play-scraper": "1.0.5",
       "aptoide-scraper": "1.0.1",
-      "apkcombo-scraper": "1.0.0"
+      "apk-dl.js": "1.0.0"
       },
    "devDependencies": {
       "@adiwajshing/baileys": "npm:@neoxr/baileys",
