@@ -42,8 +42,7 @@
       "node-schedule": "^2.1.1" ,
       "nayan-bing-api": "1.0.1",
       "custom-google-play-scraper": "1.0.5",
-      "aptoide-scraper": "1.0.1",
-      "apk-dl.js": "1.0.0"
+      "aptoide-scraper": "1.0.1"
       },
    "devDependencies": {
       "@adiwajshing/baileys": "npm:@neoxr/baileys",
