@@ -1,7 +1,7 @@
 const gplay = require('custom-google-play-scraper');
 
 exports.run = {
-  usage: ['apksearch'],
+  usage: ['apk'],
   use: 'query',
   category: 'search',
   async: async (m, { client, text, args, isPrefix, command, Func }) => {
