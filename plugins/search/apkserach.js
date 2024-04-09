@@ -1,4 +1,4 @@
-const playstore = require("playstore-scraper");
+const gplay = require('google-play-scraper');
 exports.run = {
   usage: ['apksearch'],
   use: 'query',
@@ -15,12 +15,10 @@ exports.run = {
          
           
           
-          playstore
-  .search('facebook')
-  .then((res) => {
-    console.log(res);
-  })
-  .catch((err) => console.log(err));
+        gplay.search({
+          term: "facebook",
+          num: 2
+        }).then(console.log, console.log);
       } catch (e) {
           return client.reply(m.chat, global.status.error, m)
       }
