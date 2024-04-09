@@ -25,7 +25,7 @@ exports.run = {
             }
             
             for (let i = 0; i < data.result.length; i++) {
-                const caption = `\`\`\`Image:\`\`\` ${i + 1}/${data.result.length}`;
+                const caption = `\`\`\`Image: ${i + 1}/${data.result.length}\`\`\``;
                 client.sendFile(m.chat, data.result[i], 'image.jpg', caption, m);
                 await Func.delay(1500); // Delay between sending images
             }
