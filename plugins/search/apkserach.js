@@ -10,20 +10,18 @@ exports.run = {
       
       client.sendReact(m.chat, '🕒', m.key);
       
-      const response = await gplay.search({
+       gplay.search({
         term: text,
-        num: 1
+        num: 10
+      }).then((response) => {
+        let combinedCaption = '乂  *Y T  S E R A C H*\n\n';
+        response.forEach((v, index) => {
+        combinedCaption += `    ◦  *Name*: ${v.title}\n`;
+        combinedCaption += `    ◦  *AppID*: ${v.appId}\n`;
+        combinedCaption += `    ◦  *URL*: ${v.url}\n\n`;
       });
-
-      let combinedCaption = '乂  *Y T  S E R A C H*\n\n';
-      
-        combinedCaption += `    ◦  *Name*: ${response.title}\n`;
-        combinedCaption += `    ◦  *AppID*: ${response.appId}\n`;
-        combinedCaption += `    ◦  *URL*: ${response.url}\n\n`;
-      
-
-      await m.reply(combinedCaption); // Await the reply to ensure it's sent after processing
-
+      m.reply('combinedCaption')
+      });
     } catch (e) {
       console.error(e); // Log the error for debugging
       return client.reply(m.chat, global.status.error, m);
