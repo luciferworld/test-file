@@ -1,3 +1,4 @@
+const playstore = require("playstore-scraper");
 exports.run = {
   usage: ['apksearch'],
   use: 'query',
@@ -11,14 +12,15 @@ exports.run = {
       Func
   }) => {
       try {
-          const gplay = await import('google-play-scraper');
+         
           
           if (!text) return client.reply(m.chat, Func.example(isPrefix, command, 'Facebook'), m)
-          client.sendReact(m.chat, '🕒', m.key)
-          gplay.search({
-              term: text,
-              num: 2
-          }).then(console.log, console.log);
+          playstore
+  .search(text)
+  .then((res) => {
+    console.log(res);
+  })
+  .catch((err) => console.log(err));
       } catch (e) {
           return client.reply(m.chat, global.status.error, m)
       }
