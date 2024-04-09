@@ -5,11 +5,11 @@ exports.run = {
     category: 'downloader',
     async: async (m, { client, args, text, isPrefix, command, Func }) => {
         try {
-            if (!args || !args[0]) return client.reply(m.chat, Func.example(isPrefix, command, 'your app id(com.whatsapp)'), m);
+            if (!text) return client.reply(m.chat, Func.example(isPrefix, command, 'your app id(com.whatsapp)'), m);
 
             client.sendReact(m.chat, '🕒', m.key);
 
-            let data = await download(`${text}`);
+            let data = await download(text);
             let teks = `乂  *A P K  D O W N L O A D E R *\n\n`
             teks += '	◦  *Name* : ' + data.name + '\n'
             teks += '	◦  *Upated on*: ' + data.lastup + '\n'
