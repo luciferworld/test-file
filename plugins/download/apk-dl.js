@@ -1,3 +1,4 @@
+const {download} = require('aptoide-scraper')
 exports.run = {
    usage: ['apkdl'],
    use: 'app id',
@@ -8,16 +9,16 @@ exports.run = {
 
            client.sendReact(m.chat, '🕒', m.key);
 
-           let json = await Func.fetchJson(`https://api.lolhuman.xyz/api/apkdownloader?apikey=Ibrahim112&package=${args[0]}`);
+           let data = await download(args[0]);
            
-           if (!json.message) return client.reply(m.chat, global.status.fail, m)
+           
          let teks = `乂  *A P K  D O W N L O A D E R *\n\n`
-         teks += '	◦  *Name* : ' + json.result.apk_name + '\n'
-         teks += '	◦  *Version*: ' + json.result.apk_version + '\n'
-         teks += '	◦  *Auther* : ' + json.result.apk_author + '\n'
+         teks += '	◦  *Name* : ' + data.name + '\n'
+         teks += '	◦  *Upated on*: ' + data.lastup + '\n'
+         teks += '	◦  *Size* : ' + data.size + '\n'
          teks += global.footer
-         client.sendFile(m.chat, json.result.apk_icon, '', teks, m).then(() => {
-            client.sendFile(m.chat, json.result.apk_link, json.result.apk_name + '.apk', json.result.apk_name, m)
+         client.sendFile(m.chat, data.icon, '', teks, m).then(() => {
+             client.sendFile(m.chat, data.dllink, data.name + '.apk', data.name, m)
          })
        } catch (e) {
            console.error(e);
