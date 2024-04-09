@@ -9,14 +9,14 @@ exports.run = {
 
             client.sendReact(m.chat, '🕒', m.key);
 
-            let data = await download(text);
+            let ssss = await download(text);
             let teks = `乂  *A P K  D O W N L O A D E R *\n\n`
-            teks += '	◦  *Name* : ' + data.name + '\n'
-            teks += '	◦  *Upated on*: ' + data.lastup + '\n'
-            teks += '	◦  *Size* : ' + data.size + '\n'
+            teks += '	◦  *Name* : ' + ssss.name + '\n'
+            teks += '	◦  *Upated on*: ' + ssss.lastup + '\n'
+            teks += '	◦  *Size* : ' + ssss.size + '\n'
             teks += global.footer
-            client.sendFile(m.chat, data.icon, '', teks, m).then(() => {
-                client.sendFile(m.chat, data.dllink, data.name + '.apk', data.name, m)
+            client.sendFile(m.chat, ssss.icon, '', teks, m).then(() => {
+                client.sendFile(m.chat, ssss.dllink, ssss.name + '.apk', ssss.name, m)
             })
         } catch (e) {
             console.error(e);
