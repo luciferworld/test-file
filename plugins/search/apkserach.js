@@ -7,9 +7,9 @@ exports.run = {
   async: async (m, { client, text, args, isPrefix, command, Func }) => {
     try {
       if (!text) return client.reply(m.chat, Func.example(isPrefix, command, 'Facebook'), m);
-      
+
       client.sendReact(m.chat, '🕒', m.key);
-      
+
       const response = await gplay.search({
         term: text,
         num: 2,
