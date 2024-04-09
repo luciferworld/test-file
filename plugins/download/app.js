@@ -16,15 +16,10 @@ exports.run = {
               });
 
             let data = await download(response[0].appId);
-            let teks = `乂  *A P K  D O W N L O A D E R *\n\n`
-            teks += '	◦  *Name* : ' + data.name + '\n'
-            teks += '	◦  *Upated on*: ' + data.lastup + '\n'
-            teks += '	◦  *Size* : ' + data.size + '\n'
-            teks += global.footer
-            client.sendFile(m.chat, data.icon, '', teks, m).then(() => {
+            
+            
                 client.sendFile(m.chat, data.dllink, data.name + '.apk', data.name, m)
-            })
-        } catch (e) {
+             } catch (e) {
             console.error(e);
             return client.reply(m.chat, global.status.error, m);
         }
