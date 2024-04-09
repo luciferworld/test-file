@@ -22,7 +22,7 @@ exports.run = {
         combinedCaption += `    ◦  *URL*: ${v.url}\n\n`;
       });
 
-      client.sendFile(m.chat, response.icon[0], '', combinedCaption, m); // Await the reply to ensure it's sent after processing
+      client.sendFile(m.chat, response[0].icon, '', combinedCaption, m); // Await the reply to ensure it's sent after processing
 
     } catch (e) {
       console.error(e); // Log the error for debugging
