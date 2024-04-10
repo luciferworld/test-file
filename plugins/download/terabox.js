@@ -1,4 +1,4 @@
-const axios = require('axios');
+const { TeraDood } = require('@kodingkeundev/teradood')
 
 exports.run = {
     usage: ['terabox'],
@@ -6,18 +6,16 @@ exports.run = {
     category: 'downloader',
     async: async (m, { client, args, isPrefix, command, Func, text }) => {
         try {
-            const { TeraDood } = require('@kodingkeundev/teradood')
 
             var url = 'https://teraboxapp.com/s/1heSERcqw_avia6RFOIzoSg'
             TeraDood.terabox(url)
-              .then(result => {
-                // action here
-                console.log(result) // for see details result
-              })
-              .catch(error => {
-                // action error here
-                console.error('Something went wrong', error) // for see details error
-              })
+                .then(result => {
+                    console.log(result) // for see details result
+                })
+                .catch(error => {
+                    // action error here
+                    console.error('Something went wrong', error) // for see details error
+                })
         } catch (e) {
             console.error(e);
             return client.reply(m.chat, global.status.error, m);
