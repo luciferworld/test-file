@@ -6,9 +6,12 @@ exports.run = {
     category: 'generativeai',
     async: async (m, { client, text, Func }) => {
         try {
-            const promt = "cat, 4k" // your promt
+            if (!text) return client.reply(m.chat, Func.example(isPrefix, command, 'a girl'), m)
+            client.sendReact(m.chat, '🕒', m.key)
+            const promt = text // your promt
             imagine(promt).then(data => {
-            console.log(data)
+                client.sendFile(m.chat, data.image_url, 'image.jpg', `◦  *Prompt* : ${text}`, m)
+            
           });  
         } catch (e) {
             console.error(e); // Log the error for debugging
