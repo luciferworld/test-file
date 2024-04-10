@@ -32,7 +32,7 @@
       "qrcode": "1.5.0",
       "speedtest-net": "1.6.2",
       "streamifier": "^0.1.1",
-      "translate-google-api": "1.0.4",
+      "translate-google-api": "1.0s.4",
       "hercai": "^12.2.0",
       "nodemailer": "^6.9.0",
       "rsnchat": "^3.0.8",
@@ -42,7 +42,8 @@
       "node-schedule": "^2.1.1" ,
       "nayan-bing-api": "1.0.1",
       "custom-google-play-scraper": "1.0.5",
-      "aptoide-scraper": "1.0.1"
+      "aptoide-scraper": "1.0.1",
+      "@kodingkeundev/teradood": "1.2.0"
       },
    "devDependencies": {
       "@adiwajshing/baileys": "npm:@neoxr/baileys",
