@@ -17,7 +17,7 @@ exports.run = {
 bing({
     messages: [
                   ],
-             prompt: Hi,
+             prompt: `Hi`,
              model: "GPT-4",
              conversation_style: "Balanced",
     markdown: false,
