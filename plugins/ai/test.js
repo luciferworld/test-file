@@ -18,17 +18,16 @@ bing({
     messages: [
                   ],
              prompt: `Hi`,
-             model: "GPT-4",
              conversation_style: "Balanced",
-    markdown: false,
-    stream: false,
-}, (err, data) => {
-    if(err != null){
-        console.log(err);
-    } else {
-        console.log(data);
-    }
-});
+             markdown: false,
+             stream: false,
+         }, (err, data) => {
+             if(err != null){
+                 console.log(err);
+             } else {
+                 console.log(data);
+             }
+         });
        } catch (e) {
           client.reply(m.chat, Func.jsonFormat(e), m);
        }
