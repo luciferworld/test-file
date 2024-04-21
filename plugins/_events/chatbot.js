@@ -75,7 +75,7 @@ exports.run = {
                 } else {
                     console.error('Error: Media message not found');
                 }
-            } else if (m.text) {
+            } else if (m.mtype === m.text) {
                 const userId = `${m.chat}`;
                 if (!userConversations[userId]) {
                     userConversations[userId] = { conversations: [], messageCount: 0 };
